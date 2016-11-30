@@ -12,17 +12,3 @@
  * @link      https://github.com/CakeCMS/Community".
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
-
-use Core\Cms;
-use Core\Plugin;
-
-define('MIN_LENGTH_PASS', 6);
-define('MIN_LENGTH_LOGIN', 5);
-
-if (!defined('CMS_TABLE_USERS')) {
-    define('CMS_TABLE_USERS', 'users');
-}
-
-if (!defined('CMS_TABLE_GROUPS')) {
-    define('CMS_TABLE_GROUPS', 'groups');
-}

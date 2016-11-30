@@ -13,16 +13,22 @@
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-use Core\Cms;
-use Core\Plugin;
+namespace Community\Model\Entity;
 
-define('MIN_LENGTH_PASS', 6);
-define('MIN_LENGTH_LOGIN', 5);
+use Core\ORM\Entity\Entity;
 
-if (!defined('CMS_TABLE_USERS')) {
-    define('CMS_TABLE_USERS', 'users');
-}
-
-if (!defined('CMS_TABLE_GROUPS')) {
-    define('CMS_TABLE_GROUPS', 'groups');
+/**
+ * Class Group
+ *
+ * @package Community\Model\Entity
+ *
+ * @property int $id
+ * @property null|int $parent_id
+ * @property string $name
+ * @property string $slug
+ * @property int $lft
+ * @property int $rght
+ */
+class Group extends Entity
+{
 }

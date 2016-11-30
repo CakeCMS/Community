@@ -18,6 +18,6 @@ use Cake\Routing\RouteBuilder;
 
 Router::plugin('Community', ['path' => '/'], function (RouteBuilder $routeBuilder) {
     $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-
+        $routeBuilder->connect('/community/:controller/:action/*', []);
     });
 });

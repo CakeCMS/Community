@@ -15,13 +15,29 @@
 
 use Core\Nav;
 
-Nav::add('sidebar', 'dashboard', [
-    'title' =>__d('core', 'Dashboard'),
-    'weight'=> 10,
-    'icon' => 'dashboard',
-    'url' => [
-        'plugin' => 'Core',
-        'controller' => 'Root',
-        'action' => 'dashboard',
-    ],
+Nav::add('sidebar', 'profiles', [
+    'title' =>__d('community', 'Profiles'),
+    'weight'=> 20,
+    'icon' => 'user',
+    'url' => '#',
+    'children' => [
+        'list' => [
+            'title' => __d('community', 'List of users'),
+            'weight' => 10,
+            'url' => [
+                'plugin' => 'Community',
+                'controller' => 'Users',
+                'action' => 'index',
+            ]
+        ],
+        'types' => [
+            'title' => __d('community', 'Groups'),
+            'weight' => 20,
+            'url' => [
+                'plugin' => 'Community',
+                'controller' => 'Groups',
+                'action' => 'index',
+            ]
+        ]
+    ]
 ]);
