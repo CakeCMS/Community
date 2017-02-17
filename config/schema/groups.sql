@@ -15,11 +15,11 @@
 -- Create groups table structure
 --
 CREATE TABLE IF NOT EXISTS `groups` (
-  `id`        int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id`        int(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) DEFAULT NULL,
   `name`      varchar(100) NOT NULL,
   `slug`      varchar(100) NOT NULL,
   `params`    longtext,
   `lft`       int(10) DEFAULT NULL,
   `rght`      int(10) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

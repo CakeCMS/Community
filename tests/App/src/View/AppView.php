@@ -13,13 +13,15 @@
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-define('MIN_LENGTH_PASS', 6);
-define('MIN_LENGTH_LOGIN', 5);
+namespace Test\App\View;
 
-if (!defined('CMS_TABLE_USERS')) {
-    define('CMS_TABLE_USERS', 'users');
-}
+use Core\View\AppView as CoreAppView;
 
-if (!defined('CMS_TABLE_GROUPS')) {
-    define('CMS_TABLE_GROUPS', 'groups');
+/**
+ * Class AppView
+ *
+ * @package Test\App\View
+ */
+class AppView extends CoreAppView
+{
 }
