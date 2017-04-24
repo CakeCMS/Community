@@ -13,8 +13,13 @@
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-define('MIN_LENGTH_PASS', 6);
-define('MIN_LENGTH_LOGIN', 5);
+if (!defined('MIN_LENGTH_PASS')) {
+    define('MIN_LENGTH_PASS', 6);
+}
+
+if (!defined('MIN_LENGTH_LOGIN')) {
+    define('MIN_LENGTH_LOGIN', 5);
+}
 
 if (!defined('CMS_TABLE_USERS')) {
     define('CMS_TABLE_USERS', 'users');
