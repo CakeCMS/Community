@@ -82,7 +82,7 @@ class GroupsController extends AppController
             if ($result = $this->Groups->save($group)) {
                 $this->Flash->success(__d('community', 'The group has been updated.'));
                 return $this->App->redirect([
-                    'apply' => ['action' => 'edit', $result->id],
+                    'apply' => ['action' => 'edit', $result->id]
                 ]);
             } else {
                 $this->Flash->error(__d('community', 'The group could not be updated. Please, try again.'));
@@ -138,6 +138,7 @@ class GroupsController extends AppController
      *
      * @param int $id
      * @return \Cake\Http\Response|null
+     * @SuppressWarnings(PHPMD.ShortMethodName)
      */
     public function up($id)
     {

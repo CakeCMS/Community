@@ -1,2 +1,3 @@
-# Community
-Community plugin
+# Community plugin for CakePHP CMS [![Build Status](https://travis-ci.org/CakeCMS/Community.svg?branch=master)](https://travis-ci.org/CakeCMS/Community) [![Coverage Status](https://coveralls.io/repos/github/CakeCMS/Community/badge.svg?branch=master)](https://coveralls.io/github/CakeCMS/Community?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/CakeCMS/Community/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/CakeCMS/Community/?branch=master)
+
+[![License](https://poser.pugx.org/cake-cms/community/license?format=flat-square)](https://packagist.org/packages/cake-cms/community) [![Latest Stable Version](https://poser.pugx.org/cake-cms/community/v/stable?format=flat-square)](https://packagist.org/packages/cake-cms/community) [![Latest Unstable Version](https://poser.pugx.org/cake-cms/community/v/unstable?format=flat-square)](https://packagist.org/packages/cake-cms/community)
