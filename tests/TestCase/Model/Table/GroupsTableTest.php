@@ -34,8 +34,8 @@ class GroupsTableTest extends IntegrationTestCase
 
     public function testClassName()
     {
-        $this->assertInstanceOf('Community\Model\Table\GroupsTable', $this->_getTable());
-        $this->assertSame(CMS_TABLE_GROUPS, $this->_getTable()->table());
+        self::assertInstanceOf('Community\Model\Table\GroupsTable', $this->_getTable());
+        self::assertSame(CMS_TABLE_GROUPS, $this->_getTable()->getTable());
     }
 
     public function testDefaultValidation()
@@ -43,7 +43,7 @@ class GroupsTableTest extends IntegrationTestCase
         $table  = $this->_getTable();
         $entity = $table->newEntity([]);
 
-        $this->assertSame([
+        self::assertSame([
             'name' => [
                 '_required' => __d('community', 'This field is required')
             ],
@@ -51,26 +51,26 @@ class GroupsTableTest extends IntegrationTestCase
                 '_required' => __d('community', 'This field is required')
             ]
         ], $entity->errors());
-        $this->assertFalse($table->save($entity));
+        self::assertFalse($table->save($entity));
 
         $entity = $table->newEntity([
             'name' => 'Test'
         ]);
         
-        $this->assertSame([
+        self::assertSame([
             '_required' => __d('community', 'This field is required')
         ], $entity->errors('slug'));
-        $this->assertFalse($table->save($entity));
+        self::assertFalse($table->save($entity));
 
         $entity = $table->newEntity([
             'name' => 'Registered',
             'slug' => 'registered',
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'unique' => __d('community', 'Group with this slug already exists.')
         ], $entity->errors('slug'));
-        $this->assertFalse($table->save($entity));
+        self::assertFalse($table->save($entity));
     }
 
     public function testSuccessSave()
@@ -87,13 +87,13 @@ class GroupsTableTest extends IntegrationTestCase
 
         /** @var Group $result */
         $result = $table->save($entity);
-        $this->assertInstanceOf('Community\Model\Entity\Group', $result);
-        $this->assertSame('Moderator', $result->name);
-        $this->assertSame('moderator', $result->slug);
-        $this->assertInstanceOf('JBZoo\Data\JSON', $result->params);
-        $this->assertInstanceOf('JBZoo\Data\JSON', $result->get('params'));
-        $this->assertSame('Site moderator', $result->params->get('label'));
-        $this->assertSame('Moderator description param', $result->params->get('description'));
+        self::assertInstanceOf('Community\Model\Entity\Group', $result);
+        self::assertSame('Moderator', $result->name);
+        self::assertSame('moderator', $result->slug);
+        self::assertInstanceOf('JBZoo\Data\JSON', $result->params);
+        self::assertInstanceOf('JBZoo\Data\JSON', $result->get('params'));
+        self::assertSame('Site moderator', $result->params->get('label'));
+        self::assertSame('Moderator description param', $result->params->get('description'));
     }
 
     /**

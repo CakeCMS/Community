@@ -15,7 +15,7 @@
 -- Create users table structure
 --
 CREATE TABLE IF NOT EXISTS `users` (
-  `id`            int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id`            int(11) UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `group_id`      int(10) NOT NULL,
   `login`         varchar(60) NOT NULL,
   `name`          varchar(60) NOT NULL,
@@ -29,4 +29,4 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_action`   datetime DEFAULT '0000-00-00 00:00:00',
   `modified`      datetime DEFAULT '0000-00-00 00:00:00',
   `created`       datetime DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

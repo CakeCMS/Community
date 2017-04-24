@@ -97,8 +97,8 @@ class GroupsControllerTest extends IntegrationTestCase
         /** @var Group $entity */
         $entity = $table->get($id);
 
-        $this->assertSame(2, $entity->lft);
-        $this->assertSame(3, $entity->rght);
+        self::assertSame(2, $entity->lft);
+        self::assertSame(3, $entity->rght);
 
         $this->get($url);
         /** @var GroupsController $controller */
@@ -106,8 +106,8 @@ class GroupsControllerTest extends IntegrationTestCase
         /** @var Group $entity */
         $entity = $controller->Groups->get($id);
 
-        $this->assertSame(4, $entity->lft);
-        $this->assertSame(5, $entity->rght);
+        self::assertSame(4, $entity->lft);
+        self::assertSame(5, $entity->rght);
     }
 
     public function testEditFail()
@@ -203,8 +203,8 @@ class GroupsControllerTest extends IntegrationTestCase
         /** @var Group $entity */
         $entity = $table->get($id);
 
-        $this->assertSame(4, $entity->lft);
-        $this->assertSame(5, $entity->rght);
+        self::assertSame(4, $entity->lft);
+        self::assertSame(5, $entity->rght);
 
         $this->get($url);
         /** @var GroupsController $controller */
@@ -212,7 +212,7 @@ class GroupsControllerTest extends IntegrationTestCase
         /** @var Group $entity */
         $entity = $controller->Groups->get($id);
 
-        $this->assertSame(2, $entity->lft);
-        $this->assertSame(3, $entity->rght);
+        self::assertSame(2, $entity->lft);
+        self::assertSame(3, $entity->rght);
     }
 }

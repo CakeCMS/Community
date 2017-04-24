@@ -60,7 +60,7 @@ class GroupsController extends AppController
      * Move down group action.
      *
      * @param int $id
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function down($id)
     {
@@ -71,7 +71,7 @@ class GroupsController extends AppController
      * Edit action.
      *
      * @param int $id
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function edit($id)
     {
@@ -109,12 +109,14 @@ class GroupsController extends AppController
      * Initialization hook method.
      *
      * @return void
+     * @throws
+     * @throws \Cake\Core\Exception\Exception When trying to set a key that is invalid.
      */
     public function initialize()
     {
         parent::initialize();
 
-        $this->Move->config('messages', [
+        $this->Move->setConfig('messages', [
             'success' => __d('community', 'Group has been moved'),
             'error'   => __d('community', 'Group could not been moved')
         ]);
@@ -123,7 +125,7 @@ class GroupsController extends AppController
     /**
      * Process action.
      *
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function process()
     {
@@ -135,7 +137,7 @@ class GroupsController extends AppController
      * Move up group action.
      *
      * @param int $id
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function up($id)
     {

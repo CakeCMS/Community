@@ -11,7 +11,7 @@
  * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
  * @link      https://github.com/CakeCMS/Community".
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
- * @var       \App\View\AppView $this
+ * @var       \Core\View\AppView $this
  */
 
 use Core\Toolbar\ToolbarHelper;

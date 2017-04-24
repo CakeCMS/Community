@@ -48,13 +48,17 @@ class GroupsTable extends Table
      *
      * @param array $config
      * @return void
+     * @throws \RuntimeException
      */
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->table(CMS_TABLE_GROUPS);
-        $this->primaryKey('id');
-        $this->displayField('name');
+
+        $this
+            ->setPrimaryKey('id')
+            ->setTable(CMS_TABLE_GROUPS)
+            ->setDisplayField('name');
+
         $this->addBehavior('Tree');
         $this->addAssociations([
             'belongsTo' => [

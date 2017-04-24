@@ -23,3 +23,7 @@ if (!defined('CMS_TABLE_USERS')) {
 if (!defined('CMS_TABLE_GROUPS')) {
     define('CMS_TABLE_GROUPS', 'groups');
 }
+
+if (!defined('GROUP_ADMIN')) {
+    define('GROUP_ADMIN', 4);
+}
