@@ -5,10 +5,10 @@
 -- For the full copyright and license information, please view the LICENSE
 -- file that was distributed with this source code.
 --
--- @package   Community
--- @license   MIT
--- @copyright MIT License http://www.opensource.org/licenses/mit-license.php
--- @link      https://github.com/CakeCMS/Community
+-- @package    Community
+-- @license    MIT
+-- @copyright  MIT License http://www.opensource.org/licenses/mit-license.php
+-- @link       https://github.com/CakeCMS/Community
 --
 
 --
@@ -22,4 +22,15 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `params`    longtext,
   `lft`       int(10) DEFAULT NULL,
   `rght`      int(10) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+)
+  ENGINE=InnoDB
+  AUTO_INCREMENT=4
+  DEFAULT CHARSET=utf8;
+
+--
+-- Insert default user groups
+--
+INSERT INTO `groups` (`id`, `parent_id`, `name`, `slug`, `params`, `lft`, `rght`) VALUES
+(1, NULL, 'Public', 'public', NULL, 1, 6),
+(2, 1, 'Registered', 'registered', NULL, 2, 3),
+(3, 1, 'Administrator', 'administrator', NULL, 4, 5);

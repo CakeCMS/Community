@@ -15,20 +15,40 @@
 
 namespace Community\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Core\ORM\Entity\Entity;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
- * Class Group
+ * Class User
  *
  * @package Community\Model\Entity
- *
  * @property int $id
- * @property null|int $parent_id
+ * @property int $group_id
+ * @property Group $group
+ * @property string $login
  * @property string $name
  * @property string $slug
- * @property int $lft
- * @property int $rght
+ * @property string $email
+ * @property string $password
+ * @property string $token
+ * @property bool $status
+ * @property FrozenTime $last_login
+ * @property FrozenTime $last_action
+ * @property FrozenTime $modified
+ * @property FrozenTime $created
  */
-class Group extends Entity
+class User extends Entity
 {
+
+    /**
+     * Setup password.
+     *
+     * @param string $password
+     * @return bool|string
+     */
+    protected function _setPassword($password)
+    {
+        return (new DefaultPasswordHasher())->hash($password);
+    }
 }

@@ -13,22 +13,25 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-namespace Community\Test\TestCase;
+namespace Community;
 
-use Test\Cases\TestCase;
-use Community\Controller\Admin\AppController;
+use Cake\Utility\Text;
 
 /**
- * Class AppControllerTest
+ * Class Token
  *
- * @package Community\Test\TestCase
+ * @package Community
  */
-class AppControllerTest extends TestCase
+class Token
 {
 
-    public function testClassName()
+    /**
+     * Generate user token.
+     *
+     * @return string
+     */
+    public static function generate()
     {
-        $controller = new AppController();
-        self::assertInstanceOf('Community\Controller\Admin\AppController', $controller);
+        return sha1(Text::uuid());
     }
 }

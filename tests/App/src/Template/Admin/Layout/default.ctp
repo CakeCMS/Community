@@ -6,12 +6,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
- * @var       \Core\View\AppView $this
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @var         \Core\View\AppView $this
  */
 
 $this->Document->meta([

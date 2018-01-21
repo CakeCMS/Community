@@ -6,20 +6,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
+use Core\Cms;
 use Cake\Mailer\Email;
 use Cake\Core\Configure;
 use Cake\Routing\DispatcherFactory;
 use Cake\Datasource\ConnectionManager;
 
 //  Composer autoload.
-if ($autoload = realpath('./vendor/autoload.php')) {
+$autoload = realpath('./vendor/autoload.php');
+if ($autoload) {
     /** @noinspection PhpIncludeInspection */
     require_once $autoload;
 } else {
@@ -48,13 +50,15 @@ if (!getenv('db_dsn')) {
     putenv('db_dsn=sqlite:///:memory:');
 }
 
-ConnectionManager::config('test', [
+ConnectionManager::setConfig('test', [
     'timezone' => 'UTC',
-    'url'      => getenv('db_dsn'),
+    'url'      => getenv('db_dsn')
 ]);
 
-Email::config(Configure::consume('Email'));
-Email::configTransport(Configure::consume('EmailTransport'));
+Email::setConfig(Configure::consume('Email'));
+Email::setConfigTransport(Configure::consume('EmailTransport'));
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
+
+Cms::getInstance();

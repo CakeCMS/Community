@@ -12,23 +12,13 @@
  * @link        https://github.com/CakeCMS/Community".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
+?>
+<strong>Error: </strong>
+<?= h($error->getMessage()) ?>
+<br/>
 
-namespace Community\Test\TestCase;
-
-use Test\Cases\TestCase;
-use Community\Controller\Admin\AppController;
-
-/**
- * Class AppControllerTest
- *
- * @package Community\Test\TestCase
- */
-class AppControllerTest extends TestCase
-{
-
-    public function testClassName()
-    {
-        $controller = new AppController();
-        self::assertInstanceOf('Community\Controller\Admin\AppController', $controller);
-    }
-}
+<strong>File</strong>
+<?= h($error->getFile()) ?>
+<br/>
+<strong>Line: </strong>
+<?= h($error->getLine()) ?>

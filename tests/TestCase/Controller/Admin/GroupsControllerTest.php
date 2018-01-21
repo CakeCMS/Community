@@ -6,19 +6,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 namespace Community\Test\TestCase;
 
 use Cake\ORM\TableRegistry;
 use Community\Model\Entity\Group;
+use Test\Cases\IntegrationTestCase;
 use Community\Model\Table\GroupsTable;
-use Core\TestSuite\IntegrationTestCase;
 use Community\Controller\Admin\GroupsController;
 
 /**
@@ -34,11 +34,11 @@ class GroupsControllerTest extends IntegrationTestCase
     protected $_corePlugin = 'Community';
 
     protected $_data = [
-        'parent_id' => null,
-        'name'      => 'Custom',
-        'slug'      => 'custom',
         'params'    => '',
+        'parent_id' => null,
         'action'    => 'save',
+        'name'      => 'Custom',
+        'slug'      => 'custom'
     ];
 
     public function setUp()
@@ -55,10 +55,17 @@ class GroupsControllerTest extends IntegrationTestCase
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'add']);
 
         $this->_data['slug'] = 'admin';
-        $this->post($url, $this->_data);
+        $this->post($url, [
+            'params'    => '',
+            'parent_id' => null,
+            'action'    => 'save',
+            'name'      => 'Custom',
+            'slug'      => 'admin'
+        ]);
 
         $this->assertNoRedirect();
         $this->assertResponseSuccess();
@@ -67,6 +74,9 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testAddResponseSuccess()
     {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'add']);
         $this->get($url);
         $this->assertResponseOk();
@@ -76,6 +86,7 @@ class GroupsControllerTest extends IntegrationTestCase
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'add']);
 
         $this->post($url, $this->_data);
@@ -89,6 +100,9 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testDown()
     {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
         $id  = 2;
         $url = $this->_getUrl(['action' => 'down', $id]);
 
@@ -114,9 +128,10 @@ class GroupsControllerTest extends IntegrationTestCase
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'edit', 2]);
 
-        $this->post($url, []);
+        $this->post($url);
         $this->assertNoRedirect();
         $this->assertResponseSuccess();
         $this->assertResponseContains(__d('community', 'The group could not be updated. Please, try again.'));
@@ -126,6 +141,7 @@ class GroupsControllerTest extends IntegrationTestCase
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'edit', 2]);
 
         $this->get($url);
@@ -137,6 +153,7 @@ class GroupsControllerTest extends IntegrationTestCase
     {
         $this->enableCsrfToken();
         $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'edit', 2]);
 
         $this->post($url, [
@@ -156,6 +173,9 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testIndexSuccess()
     {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'index']);
         $this->get($url);
         $this->assertResponseOk();
@@ -166,6 +186,9 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testProcessDelete()
     {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
         $url = $this->_getUrl(['action' => 'process']);
         $data = [
             'group' => [
@@ -185,7 +208,7 @@ class GroupsControllerTest extends IntegrationTestCase
             'prefix'     => 'admin',
             'plugin'     => 'Community',
             'controller' => 'Groups',
-            'action'     => 'index',
+            'action'     => 'index'
         ]);
 
         /** @var GroupsController $controller */
@@ -195,6 +218,9 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testUp()
     {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
         $id  = 3;
         $url = $this->_getUrl(['action' => 'up', $id]);
 

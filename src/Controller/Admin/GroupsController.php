@@ -6,19 +6,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 namespace Community\Controller\Admin;
 
+use Cake\Datasource\Exception\InvalidPrimaryKeyException;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Community\Model\Entity\Group;
 use Community\Model\Table\GroupsTable;
 use Core\Controller\Component\MoveComponent;
 use Core\Controller\Component\ProcessComponent;
+use Cake\ORM\Exception\RolledbackTransactionException;
 
 /**
  * Class GroupsController
@@ -35,13 +38,16 @@ class GroupsController extends AppController
      * Edit action.
      *
      * @return mixed
+     *
+     * @throws RolledbackTransactionException
      */
     public function add()
     {
         $group = $this->Groups->newEntity();
         if ($this->request->is('post')) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
-            if ($result = $this->Groups->save($group)) {
+            $group  = $this->Groups->patchEntity($group, $this->request->getData());
+            $result = $this->Groups->save($group);
+            if ($result) {
                 $this->Flash->success(__d('community', 'The group has been saved.'));
                 return $this->App->redirect([
                     'apply' => ['action' => 'edit', $result->id],
@@ -72,13 +78,17 @@ class GroupsController extends AppController
      *
      * @param int $id
      * @return \Cake\Http\Response|null
+     *
+     * @throws RecordNotFoundException
+     * @throws InvalidPrimaryKeyException
+     * @throws RolledbackTransactionException
      */
     public function edit($id)
     {
         /** @var Group $group */
         $group = $this->Groups->get($id, ['contain' => []]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
+            $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($result = $this->Groups->save($group)) {
                 $this->Flash->success(__d('community', 'The group has been updated.'));
                 return $this->App->redirect([
@@ -109,7 +119,7 @@ class GroupsController extends AppController
      * Initialization hook method.
      *
      * @return void
-     * @throws
+     *
      * @throws \Cake\Core\Exception\Exception When trying to set a key that is invalid.
      */
     public function initialize()
@@ -138,6 +148,7 @@ class GroupsController extends AppController
      *
      * @param int $id
      * @return \Cake\Http\Response|null
+     *
      * @SuppressWarnings(PHPMD.ShortMethodName)
      */
     public function up($id)

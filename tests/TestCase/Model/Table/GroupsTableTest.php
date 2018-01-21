@@ -6,19 +6,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 namespace Community\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
 use Community\Model\Entity\Group;
-use Community\Model\Table\GroupsTable;
-use Core\TestSuite\IntegrationTestCase;
+use Test\Cases\IntegrationTestCase;
 
 /**
  * Class GroupsTableTest
@@ -29,8 +28,9 @@ class GroupsTableTest extends IntegrationTestCase
 {
 
     public $fixtures = ['plugin.community.groups'];
-    protected $_plugin = 'Core';
+
     protected $_corePlugin = 'Community';
+
 
     public function testClassName()
     {
@@ -50,7 +50,7 @@ class GroupsTableTest extends IntegrationTestCase
             'slug' => [
                 '_required' => __d('community', 'This field is required')
             ]
-        ], $entity->errors());
+        ], $entity->getErrors());
         self::assertFalse($table->save($entity));
 
         $entity = $table->newEntity([
@@ -58,8 +58,10 @@ class GroupsTableTest extends IntegrationTestCase
         ]);
         
         self::assertSame([
-            '_required' => __d('community', 'This field is required')
-        ], $entity->errors('slug'));
+            'slug' => [
+                '_required' => __d('community', 'This field is required')
+            ]
+        ], $entity->getErrors('slug'));
         self::assertFalse($table->save($entity));
 
         $entity = $table->newEntity([
@@ -68,8 +70,10 @@ class GroupsTableTest extends IntegrationTestCase
         ]);
 
         self::assertSame([
-            'unique' => __d('community', 'Group with this slug already exists.')
-        ], $entity->errors('slug'));
+            'slug' => [
+                'unique' => __d('community', 'Group with this slug already exists.')
+            ]
+        ], $entity->getErrors('slug'));
         self::assertFalse($table->save($entity));
     }
 
@@ -77,16 +81,17 @@ class GroupsTableTest extends IntegrationTestCase
     {
         $table  = $this->_getTable();
         $entity = $table->newEntity([
-            'name' => 'Moderator',
-            'slug' => 'moderator',
+            'name'   => 'Moderator',
+            'slug'   => 'moderator',
             'params' => [
-                'label' => 'Site moderator',
+                'label'       => 'Site moderator',
                 'description' => 'Moderator description param'
             ]
         ]);
 
         /** @var Group $result */
         $result = $table->save($entity);
+
         self::assertInstanceOf('Community\Model\Entity\Group', $result);
         self::assertSame('Moderator', $result->name);
         self::assertSame('moderator', $result->slug);
@@ -97,10 +102,13 @@ class GroupsTableTest extends IntegrationTestCase
     }
 
     /**
-     * @return \Cake\ORM\Table|GroupsTable
+     * Get table object.
+     *
+     * @param null|string $name
+     * @return \Cake\ORM\Table
      */
-    protected function _getTable()
+    protected function _getTable($name = 'Groups')
     {
-        return TableRegistry::get('Community.Groups');
+        return TableRegistry::get($this->_corePlugin . '.' . $name);
     }
 }

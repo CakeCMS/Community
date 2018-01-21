@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 use Core\Nav;
@@ -37,6 +37,16 @@ Nav::add('sidebar', 'profiles', [
                 'plugin' => 'Community',
                 'controller' => 'Groups',
                 'action' => 'index',
+            ]
+        ],
+        'params' => [
+            'title' => __d('community', 'Params'),
+            'weight' => 30,
+            'url' => [
+                'plugin' => 'Extensions',
+                'controller' => 'Plugins',
+                'action' => 'config',
+                'community'
             ]
         ]
     ]

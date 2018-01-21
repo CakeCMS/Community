@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Community
- * @license   MIT
- * @copyright MIT License http://www.opensource.org/licenses/mit-license.php
- * @link      https://github.com/CakeCMS/Community".
- * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @package     Community
+ * @license     MIT
+ * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
+ * @link        https://github.com/CakeCMS/Community".
+ * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
 use Cake\Cache\Cache;
@@ -19,67 +19,71 @@ use Cake\Core\Configure;
 //  Write test application config.
 Configure::write('debug', true);
 Configure::write('App', [
-    'namespace'     => 'Test\App',
-    'encoding'      => env('APP_ENCODING', 'UTF-8'),
-    'defaultLocale' => env('APP_DEFAULT_LOCALE', 'ru_RU'),
     'base'          => false,
     'dir'           => 'src',
-    'cacheDir'      => 'cache',
-    'webroot'       => 'webroot',
-    'wwwRoot'       => WWW_ROOT,
-    'fullBaseUrl'   => 'http://localhost',
-    'imageBaseUrl'  => 'img/',
-    'cssBaseUrl'    => 'css/',
     'jsBaseUrl'     => 'js/',
+    'cssBaseUrl'    => 'css/',
+    'imageBaseUrl'  => 'img/',
+    'cacheDir'      => 'cache',
     'lessBaseUrl'   => 'less/',
+    'wwwRoot'       => WWW_ROOT,
+    'webroot'       => 'webroot',
+    'namespace'     => 'Test\App',
+    'fullBaseUrl'   => 'http://localhost',
+    'encoding'      => env('APP_ENCODING', 'UTF-8'),
+    'defaultLocale' => env('APP_DEFAULT_LOCALE', 'ru_RU'),
     'paths'         => [
         'plugins' => [
             TEST_APP_DIR . 'plugins' . DS,
-            TEST_APP_DIR . 'themes' . DS,
+            TEST_APP_DIR . 'themes' . DS
         ],
-        'templates' => [APP . 'Template' . DS],
-        'locales' => [APP . 'Locale' . DS],
+        'templates' => [
+            APP . 'Template' . DS
+        ],
+        'locales' => [
+            APP . 'Locale' . DS
+        ]
     ],
 ]);
 
 Configure::write('EmailTransport', [
     'default' => [
-        'className' => 'Mail',
-        'host'      => 'localhost',
-        'port'      => 25,
         'timeout'   => 30,
-        'username'  => 'user',
-        'password'  => 'secret',
+        'port'      => 25,
         'client'    => null,
         'tls'       => null,
-    ],
+        'className' => 'Mail',
+        'username'  => 'user',
+        'password'  => 'secret',
+        'host'      => 'localhost'
+    ]
 ]);
 
 Configure::write('Email', [
     'default' => [
-        'transport'     => 'default',
-        'from'          => 'you@localhost',
         'charset'       => 'utf-8',
         'headerCharset' => 'utf-8',
-    ],
+        'transport'     => 'default',
+        'from'          => 'you@localhost'
+    ]
 ]);
 
 Configure::write('Theme', [
-    'site'  => 'Frontend',
     'admin' => 'Backend',
+    'site'  => 'Frontend'
 ]);
 
 Configure::write('Session', ['defaults' => 'php']);
 
-Cache::config([
+Cache::setConfig([
     '_cake_core_' => [
+        'serialize' => true,
         'engine'    => 'File',
-        'prefix'    => 'cms_core_',
-        'serialize' => true
+        'prefix'    => 'cms_core_'
     ],
     '_cake_model_' => [
+        'serialize' => true,
         'engine'    => 'File',
-        'prefix'    => 'cms_model_',
-        'serialize' => true
+        'prefix'    => 'cms_model_'
     ]
 ]);
