@@ -19,6 +19,9 @@ use Core\Toolbar\ToolbarHelper;
 
 ToolbarHelper::add(__d('community', 'New user'));
 ToolbarHelper::delete();
+
+
+echo $this->Form->create(null, ['process' => true, 'jsForm' => true]);
 ?>
 <table class="ckTableProcess striped highlight responsive-table jsProcessTable">
     <?php
@@ -27,8 +30,8 @@ ToolbarHelper::delete();
         [__d('core', 'Id') => ['class' => 'center']],
         $this->Paginator->sort('name'),
         $this->Paginator->sort('email'),
-        __d('community', 'Group'),
-        [__d('core', 'Actions') => ['class' => 'center']],
+        [$this->Paginator->sort('status', __d('core', 'Status')) => ['class' => 'center']],
+        __d('community', 'Group')
     ]);
 
     echo $this->Html->tag('thead', $tHeaders);
@@ -42,10 +45,11 @@ ToolbarHelper::delete();
             [$user->id, ['class' => 'center']],
             $editLink,
             $user->email,
-            $user->group->name,
-            ''
+            [$this->Html->status($user->status), ['class' => 'center']],
+            $user->group->name
         ];
     }
     echo $this->Html->tableCells($rows);
     ?>
 </table>
+<?php echo $this->Form->end();

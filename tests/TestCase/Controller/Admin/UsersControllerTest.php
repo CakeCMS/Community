@@ -17,11 +17,13 @@ namespace Community\Test\TestCase;
 
 use Cake\Utility\Hash;
 use Test\Cases\IntegrationTestCase;
+use Community\Controller\Admin\UsersController;
 
 /**
  * Class UsersControllerTest
  *
  * @package Community\Test\TestCase
+ * @property UsersController|null $_controller
  */
 class UsersControllerTest extends IntegrationTestCase
 {
@@ -79,6 +81,36 @@ class UsersControllerTest extends IntegrationTestCase
             'controller' => 'Users',
             'action'     => 'index'
         ]);
+    }
+
+    /**
+     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     */
+    public function testProcessSuccessDelete()
+    {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $url = $this->_getUrl([
+            'action' => 'process'
+        ]);
+
+        $this->post($url, [
+            'user' => [
+                1 => [
+                    'id' => 1
+                ]
+            ],
+            'action' => 'delete'
+        ]);
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'plugin'     => 'Community',
+            'controller' => 'Users',
+            'action'     => 'index'
+        ]);
+
+        $this->_controller->Users->get(1);
     }
 
     protected function _getData(array $data = [])

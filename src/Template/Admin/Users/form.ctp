@@ -23,7 +23,10 @@ ToolbarHelper::cancel();
 $user = $this->get('user');
 
 $this->Html->script('Community.admin/widget/form.js', ['block' => 'script_bottom']);
-$this->Js->widget('.jsUserAddForm', 'JBZoo.UserAdminForm');
+
+$this->Js->widget('.jsUserAddForm', 'JBZoo.UserAdminForm', [
+    'isNotify' => (bool) $this->request->getData('notify', 0)
+]);
 
 echo $this->Form->create($user, ['jsForm' => true, 'class' => 'jsUserAddForm']);
 ?>

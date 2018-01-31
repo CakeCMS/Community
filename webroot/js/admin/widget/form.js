@@ -12,7 +12,9 @@
  */
 
 
-JBZoo.widget('JBZoo.UserAdminForm', {}, {
+JBZoo.widget('JBZoo.UserAdminForm', {
+    'isNotify' : false
+}, {
 
     /**
      * Widget constructor.
@@ -25,6 +27,10 @@ JBZoo.widget('JBZoo.UserAdminForm', {}, {
         if (!$this.$('.jsStatus').prop('checked')) {
             $this._disablePasswordFields($this);
         }
+
+        if ($this.action === 'add' && $this.getOption('isNotify') === true) {
+            $this.$('.jsStatus').closest('.switch').hide();
+        }
     },
 
     /**
@@ -36,7 +42,7 @@ JBZoo.widget('JBZoo.UserAdminForm', {}, {
     'change .jsNotify' : function (e, $this) {
         var status = $this.$('.jsStatus');
         status.attr('checked', false);
-        status.trigger('change').parent().slideToggle('fast');
+        status.trigger('change').closest('.switch').slideToggle('fast');
     },
 
     /**
@@ -50,7 +56,7 @@ JBZoo.widget('JBZoo.UserAdminForm', {}, {
         var isChecked  = el.prop('checked');
         var pwdWrapper = $this.$('.jsPasswordWrapper');
 
-        if ($this.action == 'add') {
+        if ($this.action === 'add') {
             if (isChecked) {
                 pwdWrapper.slideDown();
                 $this._enablePasswordFields($this);

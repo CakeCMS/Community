@@ -129,4 +129,31 @@ class UsersController extends AppController
             ->set('users', $this->paginate($query))
             ->set('page_title', __d('community', 'Profiles: User list'));
     }
+
+    /**
+     * Initialization hook method.
+     *
+     * Implement this method to avoid having to overwrite
+     * the constructor and call parent.
+     *
+     * @return void
+     *
+     * @throws \Cake\Core\Exception\Exception
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Security->setConfig('unlockedFields', ['password', 'password_confirm']);
+    }
+
+    /**
+     * Process action.
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function process()
+    {
+        list($action, $ids) = $this->Process->getRequestVars($this->name);
+        return $this->Process->make($this->Users, $action, $ids);
+    }
 }
