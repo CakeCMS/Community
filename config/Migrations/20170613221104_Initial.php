@@ -145,22 +145,22 @@ class Initial extends AbstractMigration
             ->addColumn('last_login', 'datetime', [
                 'limit'     => null,
                 'null'      => true,
-                'default'   => '0000-00-00 00:00:00'
+                'default'   => 'CURRENT_TIMESTAMP'
             ])
             ->addColumn('last_action', 'datetime', [
                 'limit'     => null,
                 'null'      => true,
-                'default'   => '0000-00-00 00:00:00'
+                'default'   => 'CURRENT_TIMESTAMP'
             ])
             ->addColumn('modified', 'datetime', [
                 'limit'     => null,
                 'null'      => true,
-                'default'   => '0000-00-00 00:00:00'
+                'default'   => 'CURRENT_TIMESTAMP'
             ])
             ->addColumn('created', 'datetime', [
                 'limit'     => null,
                 'null'      => true,
-                'default'   => '0000-00-00 00:00:00'
+                'default'   => 'CURRENT_TIMESTAMP'
             ])
             ->create();
     }
