@@ -20,6 +20,17 @@ ToolbarHelper::apply();
 ToolbarHelper::save();
 ToolbarHelper::cancel();
 
+$this->Assets->slugify();
+
+$this->Js->setBuffer("
+    $('#slug').slugify('#name');
+    $('#name').on('keyup', function() {
+        if (!$('label[for=slug]').hasClass('active')) {
+            $('label[for=slug]').addClass('active');
+        }
+    });
+");
+
 $group = $this->get('group');
 
 echo $this->Form->create($group, ['jsForm' => true]);

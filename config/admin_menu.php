@@ -16,38 +16,42 @@
 use Core\Nav;
 
 Nav::add('sidebar', 'profiles', [
-    'title' =>__d('community', 'Profiles'),
-    'weight'=> 20,
-    'icon' => 'user',
-    'url' => '#',
+    'weight'   => 20,
+    'url'      => '#',
+    'icon'     => 'user',
+    'title'    =>__d('community', 'Profiles'),
     'children' => [
+
         'list' => [
-            'title' => __d('community', 'List of users'),
-            'weight' => 10,
             'url' => [
-                'plugin' => 'Community',
                 'controller' => 'Users',
-                'action' => 'index',
-            ]
+                'action'     => 'index',
+                'plugin'     => 'Community'
+            ],
+            'weight' => 10,
+            'title'  => __d('community', 'Users')
         ],
+
         'types' => [
-            'title' => __d('community', 'Groups'),
-            'weight' => 20,
             'url' => [
-                'plugin' => 'Community',
                 'controller' => 'Groups',
-                'action' => 'index',
-            ]
+                'action'     => 'index',
+                'plugin'     => 'Community'
+            ],
+            'weight' => 20,
+            'title'  => __d('community', 'Groups')
         ],
+
         'params' => [
-            'title' => __d('community', 'Params'),
-            'weight' => 30,
             'url' => [
-                'plugin' => 'Extensions',
+                'action'     => 'config',
                 'controller' => 'Plugins',
-                'action' => 'config',
+                'plugin'     => 'Extensions',
                 'community'
-            ]
+            ],
+            'weight' => 30,
+            'title'  => __d('community', 'Params')
         ]
+
     ]
 ]);
