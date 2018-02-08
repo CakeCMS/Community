@@ -32,7 +32,12 @@ return [
         'Messages' => [
             'msg_account_create_subject' => [
                 'type'    => 'text',
-                'label'   => __d('community', 'Message subject'),
+                'label'   => __d('community', 'Message create subject'),
+                'default' => __d('community', 'Account activation')
+            ],
+            'msg_account_create_msg' => [
+                'type'    => 'textarea',
+                'label'   => __d('community', 'Message create text'),
                 'default' => __d('community', 'Account activation')
             ]
         ]
