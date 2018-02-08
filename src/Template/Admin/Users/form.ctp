@@ -20,6 +20,17 @@ ToolbarHelper::apply();
 ToolbarHelper::save();
 ToolbarHelper::cancel();
 
+$this->Assets->slugify();
+
+$this->Js->setBuffer("
+    $('#slug').slugify('#login');
+    $('#login').on('keyup', function() {
+        if (!$('label[for=slug]').hasClass('active')) {
+            $('label[for=slug]').addClass('active');
+        }
+    });
+");
+
 $user = $this->get('user');
 
 $this->Html->script('Community.admin/widget/form.js', ['block' => 'script_bottom']);
