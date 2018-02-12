@@ -12,6 +12,7 @@
  * @link      https://github.com/CakeCMS/Community".
  * @author    Sergey Kalistratov <kalistratov.s.m@gmail.com>
  * @var       \Core\View\AppView $this
+ * @var       \Community\Model\Entity\User $user
  */
 
 use Core\Toolbar\ToolbarHelper;
@@ -19,6 +20,13 @@ use Core\Toolbar\ToolbarHelper;
 ToolbarHelper::apply();
 ToolbarHelper::save();
 ToolbarHelper::cancel();
+
+if ($this->request->getParam('action') === 'edit') {
+    ToolbarHelper::link(__d('community', 'Change password'), [
+        'action' => 'changePassword',
+        $user->id
+    ]);
+}
 
 $this->Assets->slugify();
 

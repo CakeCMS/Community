@@ -45,10 +45,14 @@ class User extends Entity
      * Setup password.
      *
      * @param string $password
-     * @return bool|string
+     * @return null|string
      */
     protected function _setPassword($password)
     {
-        return (new DefaultPasswordHasher())->hash($password);
+        if ($password !== null) {
+            return (new DefaultPasswordHasher())->hash($password);
+        }
+
+        return null;
     }
 }

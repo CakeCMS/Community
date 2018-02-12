@@ -65,22 +65,42 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
 
         $this->post($url, $this->_getData([
+            'action'           => 'save',
             'login'            => 'tester',
             'name'             => 'tester',
             'slug'             => 'tester',
-            'email'            => 'tester@gmail.com',
             'password'         => '123456',
             'password_confirm' => '123456',
-            'action'           => 'save'
+            'email'            => 'tester@gmail.com'
         ]));
 
         $this->assertResponseSuccess();
         $this->assertRedirect([
             'prefix'     => 'admin',
-            'plugin'     => 'Community',
             'controller' => 'Users',
-            'action'     => 'index'
+            'action'     => 'index',
+            'plugin'     => 'Community'
         ]);
+    }
+
+    public function testFailChangePassword()
+    {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $userId = 1;
+
+        $url = $this->_getUrl(['action' => 'changePassword', $userId]);
+
+        $this->post($url, [
+            'action'            => 'save',
+            'password'          => 111000,
+            'password_confirm'  => 111111
+        ]);
+
+        $this->assertNoRedirect();
+        $this->assertResponseSuccess();
+        $this->assertResponseContains(__d('community', 'Password could not be updated. Please, try again.'));
     }
 
     /**
@@ -105,12 +125,35 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertRedirect([
             'prefix'     => 'admin',
-            'plugin'     => 'Community',
             'controller' => 'Users',
-            'action'     => 'index'
+            'action'     => 'index',
+            'plugin'     => 'Community'
         ]);
 
         $this->_controller->Users->get(1);
+    }
+
+    public function testSuccessChangePassword()
+    {
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+
+        $userId = 1;
+
+        $url = $this->_getUrl(['action' => 'changePassword', $userId]);
+
+        $this->post($url, [
+            'action'            => 'save',
+            'password'          => 111111,
+            'password_confirm'  => 111111
+        ]);
+
+        $this->assertRedirect([
+            'controller' => 'Users',
+            'prefix'     => 'admin',
+            'action'     => 'index',
+            'plugin'     => 'Community'
+        ]);
     }
 
     protected function _getData(array $data = [])

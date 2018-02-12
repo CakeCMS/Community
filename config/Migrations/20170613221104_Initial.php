@@ -130,7 +130,7 @@ class Initial extends AbstractMigration
             ->addColumn('token', 'string', [
                 'limit'     => 60,
                 'default'   => null,
-                'null'      => false
+                'null'      => true,
             ])
             ->addColumn('status', 'boolean', [
                 'limit'     => null,

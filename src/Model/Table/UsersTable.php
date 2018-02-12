@@ -17,12 +17,14 @@ namespace Community\Model\Table;
 
 use Core\ORM\Table;
 use Cake\Validation\Validator;
+use Community\Model\Entity\User;
 
 /**
  * Class UsersTable
  *
  * @package Community\Model\Table
  * @method filterParams(array $query = [])
+ * @method User get($primaryKey, $options = [])
  * @property GroupsTable $Groups
  */
 class UsersTable extends Table
@@ -66,12 +68,12 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->requirePresence('login')
+            ->requirePresence('login', 'create')
             ->notEmpty('login', __d('community', 'Login could not be empty.'))
             ->add('login', 'unique', [
-                'message'  => __d('community', 'User with this login already exists.'),
-                'rule'     => 'validateUnique',
                 'provider' => 'table',
+                'rule'     => 'validateUnique',
+                'message'  => __d('community', 'User with this login already exists.')
             ])
             ->add('login', 'length', [
                 'rule'    => ['minLength', MIN_LENGTH_LOGIN],
@@ -79,12 +81,12 @@ class UsersTable extends Table
             ]);
 
         $validator
-            ->requirePresence('slug')
+            ->requirePresence('slug', 'create')
             ->notEmpty('slug', __d('community', 'Alias could not be empty.'))
             ->add('slug', 'unique', [
-                'message'  => __d('community', 'User with this alias already exists.'),
-                'rule'     => 'validateUnique',
                 'provider' => 'table',
+                'rule'     => 'validateUnique',
+                'message'  => __d('community', 'User with this alias already exists.')
             ])
             ->add('slug', 'length', [
                 'rule'    => ['minLength', MIN_LENGTH_LOGIN],
@@ -92,7 +94,7 @@ class UsersTable extends Table
             ]);
 
         $validator
-            ->requirePresence('group_id')
+            ->requirePresence('group_id', 'create')
             ->notEmpty('group_id', __d('community', 'Please, choose user group.'))
             ->notEmpty('name', __d('community', 'Please, enter you full name.'));
 
@@ -101,25 +103,25 @@ class UsersTable extends Table
             ->add('email', 'unique', [
                 'provider' => 'table',
                 'rule'     => 'validateUnique',
-                'message'  => __d('community', 'User with this email already exists.'),
+                'message'  => __d('community', 'User with this email already exists.')
             ])
             ->add('email', 'valid', [
                 'rule'    => 'email',
-                'message' => __d('community', 'Please enter valid email.'),
+                'message' => __d('community', 'Please enter valid email.')
             ]);
 
         $validator
             ->notEmpty('password', __d('community', 'Please, enter you password.'))
             ->add('password', 'minLength', [
                 'rule'    => ['minLength', MIN_LENGTH_PASS],
-                'message' => __d('community', 'The minimum password length is {0}', MIN_LENGTH_PASS),
+                'message' => __d('community', 'The minimum password length is {0}', MIN_LENGTH_PASS)
             ]);
 
         $validator
             ->notEmpty('password_confirm', __d('community', 'Please, confirm you password.'))
             ->add('password_confirm', 'no-misspelling', [
                 'rule'    => ['compareWith', 'password'],
-                'message' => __d('community', 'Passwords are not equal'),
+                'message' => __d('community', 'Passwords are not equal')
             ]);
 
         return $validator;

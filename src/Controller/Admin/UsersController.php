@@ -77,6 +77,32 @@ class UsersController extends AppController
     }
 
     /**
+     * Change user password action.
+     *
+     * @param null|int $id
+     * @return \Cake\Http\Response|null
+     */
+    public function changePassword($id = null)
+    {
+        $user = $this->Users->get($id, ['contain' => []]);
+        $user->set('password', null);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($result = $this->Users->save($user)) {
+                $this->Flash->success(__d('community', 'Password has been updated.'));
+                return $this->App->redirect(['apply' => ['action' => 'edit', $result->id]]);
+            } else {
+                $this->Flash->error(__d('community', 'Password could not be updated. Please, try again.'));
+            }
+        }
+
+        $this
+            ->set(compact('user'))
+            ->set('page_title', __d('community', 'Profiles: {0} - change password', $user->name));
+    }
+
+    /**
      * Edit action.
      *
      * @param null|int $id
