@@ -16,16 +16,19 @@
 namespace Community\Model\Table;
 
 use Core\ORM\Table;
+use Core\Event\EventManager;
 use Cake\Validation\Validator;
 use Community\Model\Entity\User;
+use Cake\Datasource\EntityInterface;
 
 /**
  * Class UsersTable
  *
- * @package Community\Model\Table
- * @method filterParams(array $query = [])
- * @method User get($primaryKey, $options = [])
- * @property GroupsTable $Groups
+ * @method      filterParams(array $query = [])
+ * @method      User get($primaryKey, $options = [])
+ * @property    GroupsTable $Groups
+ *
+ * @package     Community\Model\Table
  */
 class UsersTable extends Table
 {
@@ -33,9 +36,10 @@ class UsersTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config
-     * @return void
-     * @throws \RuntimeException
+     * @param   array $config
+     * @return  void
+     *
+     * @throws  \RuntimeException
      */
     public function initialize(array $config)
     {
@@ -60,10 +64,35 @@ class UsersTable extends Table
     }
 
     /**
+     * Persists an entity based on the fields that are marked as dirty and
+     * returns the same entity after a successful save or false in case
+     * of any error.
+     *
+     * @param   \Cake\Datasource\EntityInterface $entity the entity to be saved
+     * @param   array|\ArrayAccess $options The options to use when saving.
+     * @return  \Cake\Datasource\EntityInterface|false
+     */
+    public function save(EntityInterface $entity, $options = [])
+    {
+        EventManager::trigger('Model.User.beforeSave', $this, [
+            'user' => $entity
+        ]);
+
+        $success = parent::save($entity, $options);
+
+        EventManager::trigger('Model.User.afterSave', $this, [
+            'user'    => $entity,
+            'success' => $success
+        ]);
+
+        return $success;
+    }
+
+    /**
      * Default validation rules.
      *
-     * @param Validator $validator
-     * @return Validator
+     * @param   Validator $validator
+     * @return  Validator
      */
     public function validationDefault(Validator $validator)
     {

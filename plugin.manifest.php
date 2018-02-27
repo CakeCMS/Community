@@ -13,6 +13,8 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
+use Core\View\AppView;
+
 return [
     'meta' => [
         'name'        => 'Community',
@@ -30,6 +32,11 @@ return [
     ],
     'params' => [
         'Messages' => [
+            'separator' => function(AppView $view) {
+                return $view->Html->tag('h4', __d('community', 'Create account message settings'), [
+                    'ck-param-separator'
+                ]);
+            },
             'msg_account_create_subject' => [
                 'type'    => 'text',
                 'label'   => __d('community', 'Message create subject'),

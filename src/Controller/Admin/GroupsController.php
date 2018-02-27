@@ -26,10 +26,10 @@ use Cake\ORM\Exception\RolledbackTransactionException;
 /**
  * Class GroupsController
  *
- * @package Community\Controller\Admin
- * @property GroupsTable $Groups
- * @property MoveComponent $Move
- * @property ProcessComponent $Process
+ * @package     Community\Controller\Admin
+ * @property    GroupsTable $Groups
+ * @property    MoveComponent $Move
+ * @property    ProcessComponent $Process
  */
 class GroupsController extends AppController
 {
@@ -37,9 +37,9 @@ class GroupsController extends AppController
     /**
      * Edit action.
      *
-     * @return mixed
+     * @return  mixed
      *
-     * @throws RolledbackTransactionException
+     * @throws  RolledbackTransactionException
      */
     public function add()
     {
@@ -65,8 +65,8 @@ class GroupsController extends AppController
     /**
      * Move down group action.
      *
-     * @param int $id
-     * @return \Cake\Http\Response|null
+     * @param   int $id
+     * @return  \Cake\Http\Response|null
      */
     public function down($id)
     {
@@ -76,12 +76,12 @@ class GroupsController extends AppController
     /**
      * Edit action.
      *
-     * @param int $id
-     * @return \Cake\Http\Response|null
+     * @param   int $id
+     * @return  \Cake\Http\Response|null
      *
-     * @throws RecordNotFoundException
-     * @throws InvalidPrimaryKeyException
-     * @throws RolledbackTransactionException
+     * @throws  RecordNotFoundException
+     * @throws  InvalidPrimaryKeyException
+     * @throws  RolledbackTransactionException
      */
     public function edit($id)
     {
@@ -107,7 +107,7 @@ class GroupsController extends AppController
     /**
      * Index action.
      *
-     * @return void
+     * @return  void
      */
     public function index()
     {
@@ -118,9 +118,9 @@ class GroupsController extends AppController
     /**
      * Initialization hook method.
      *
-     * @return void
+     * @return  void
      *
-     * @throws \Cake\Core\Exception\Exception When trying to set a key that is invalid.
+     * @throws  \Cake\Core\Exception\Exception When trying to set a key that is invalid.
      */
     public function initialize()
     {
@@ -135,7 +135,7 @@ class GroupsController extends AppController
     /**
      * Process action.
      *
-     * @return \Cake\Http\Response|null
+     * @return  \Cake\Http\Response|null
      */
     public function process()
     {
@@ -146,8 +146,8 @@ class GroupsController extends AppController
     /**
      * Move up group action.
      *
-     * @param int $id
-     * @return \Cake\Http\Response|null
+     * @param   int $id
+     * @return  \Cake\Http\Response|null
      *
      * @SuppressWarnings(PHPMD.ShortMethodName)
      */

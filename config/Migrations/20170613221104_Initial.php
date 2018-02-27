@@ -125,7 +125,7 @@ class Initial extends AbstractMigration
             ->addColumn('password', 'string', [
                 'limit'     => 100,
                 'default'   => null,
-                'null'      => false
+                'null'      => true
             ])
             ->addColumn('token', 'string', [
                 'limit'     => 60,

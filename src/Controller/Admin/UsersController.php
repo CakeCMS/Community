@@ -16,7 +16,6 @@
 namespace Community\Controller\Admin;
 
 use Community\Token;
-use Core\Event\EventManager;
 use Community\Model\Entity\User;
 use Community\Model\Table\UsersTable;
 use Cake\ORM\Exception\RolledbackTransactionException;
@@ -26,8 +25,8 @@ use Cake\Datasource\Exception\InvalidPrimaryKeyException;
 /**
  * Class UsersController
  *
- * @package Community\Controller\Admin
- * @property UsersTable $Users
+ * @package     Community\Controller\Admin
+ * @property    UsersTable $Users
  */
 class UsersController extends AppController
 {
@@ -35,9 +34,9 @@ class UsersController extends AppController
     /**
      * Add action.
      *
-     * @return \Cake\Http\Response|null
+     * @return  \Cake\Http\Response|null
      *
-     * @throws \Cake\ORM\Exception\RolledbackTransactionException
+     * @throws  \Cake\ORM\Exception\RolledbackTransactionException
      */
     public function add()
     {
@@ -49,15 +48,7 @@ class UsersController extends AppController
                 $user->set('token', Token::generate());
             }
 
-            EventManager::trigger('Admin.Controller.User.Add.BeforeSave', $this, [
-                'user' => $user
-            ]);
-
             if ($result = $this->Users->save($user)) {
-                EventManager::trigger('Admin.Controller.User.Add.AfterSave', $this, [
-                    'user' => $result
-                ]);
-
                 $this->Flash->success(__d('community', 'The user {0} has been saved.', sprintf(
                     '<strong>«%s»</strong>',
                     $result->get('login')
@@ -79,8 +70,8 @@ class UsersController extends AppController
     /**
      * Change user password action.
      *
-     * @param null|int $id
-     * @return \Cake\Http\Response|null
+     * @param   null|int $id
+     * @return  \Cake\Http\Response|null
      */
     public function changePassword($id = null)
     {
@@ -105,12 +96,12 @@ class UsersController extends AppController
     /**
      * Edit action.
      *
-     * @param null|int $id
-     * @return \Cake\Http\Response|null
+     * @param   null|int $id
+     * @return  \Cake\Http\Response|null
      *
-     * @throws RecordNotFoundException
-     * @throws InvalidPrimaryKeyException
-     * @throws RolledbackTransactionException
+     * @throws  RecordNotFoundException
+     * @throws  InvalidPrimaryKeyException
+     * @throws  RolledbackTransactionException
      */
     public function edit($id = null)
     {
@@ -141,9 +132,9 @@ class UsersController extends AppController
     /**
      * Index action.
      *
-     * @return void
+     * @return  void
      *
-     * @throws \RuntimeException
+     * @throws  \RuntimeException
      */
     public function index()
     {
@@ -157,14 +148,11 @@ class UsersController extends AppController
     }
 
     /**
-     * Initialization hook method.
+     * Initialization hook method. Implement this method to avoid having to overwrite the constructor and call parent.
      *
-     * Implement this method to avoid having to overwrite
-     * the constructor and call parent.
+     * @return  void
      *
-     * @return void
-     *
-     * @throws \Cake\Core\Exception\Exception
+     * @throws  \Cake\Core\Exception\Exception
      */
     public function initialize()
     {
@@ -175,7 +163,7 @@ class UsersController extends AppController
     /**
      * Process action.
      *
-     * @return \Cake\Http\Response|null
+     * @return  \Cake\Http\Response|null
      */
     public function process()
     {

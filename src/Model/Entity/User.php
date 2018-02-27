@@ -23,29 +23,52 @@ use Cake\Auth\DefaultPasswordHasher;
  * Class User
  *
  * @package Community\Model\Entity
- * @property int $id
- * @property int $group_id
- * @property Group $group
- * @property string $login
- * @property string $name
- * @property string $slug
- * @property string $email
- * @property string $password
- * @property string $token
- * @property bool $status
+ *
+ * @property int        $id
+ * @property int        $group_id
+ * @property Group      $group
+ * @property string     $login
+ * @property string     $name
+ * @property string     $slug
+ * @property string     $email
+ * @property string     $password
+ * @property string     $token
+ * @property bool       $status
  * @property FrozenTime $last_login
  * @property FrozenTime $last_action
  * @property FrozenTime $modified
  * @property FrozenTime $created
+ * @property string     activation_url  Virtual field.
  */
 class User extends Entity
 {
 
     /**
+     * List of computed or virtual fields that **should** be included in JSON or array
+     * representations of this Entity. If a field is present in both _hidden and _virtual
+     * the field will **not** be in the array/json versions of the entity.
+     *
+     * @var array
+     */
+    protected $_virtual = [
+        'activation_url'
+    ];
+
+    /**
+     * Set virtual field activation_url.
+     *
+     * @return  string
+     */
+    protected function _getActivationUrl()
+    {
+        return '/activation/user/1';
+    }
+
+    /**
      * Setup password.
      *
-     * @param string $password
-     * @return null|string
+     * @param   string $password
+     * @return  null|string
      */
     protected function _setPassword($password)
     {

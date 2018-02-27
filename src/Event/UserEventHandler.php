@@ -16,6 +16,10 @@
 namespace Community\Event;
 
 use Cake\Event\Event;
+use JBZoo\Utils\Filter;
+use Community\Notify\Email;
+use Community\Model\Entity\User;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\EventListenerInterface;
 
 /**
@@ -29,31 +33,58 @@ class UserEventHandler implements EventListenerInterface
     /**
      * Returns a list of events this object is implementing.
      *
-     * @return array
+     * @return  array
      */
     public function implementedEvents()
     {
         return [
-            'Admin.Controller.User.Add.BeforeSave' => 'onAdminAddBeforeSave',
-            'Admin.Controller.User.Add.AfterSave'  => 'onAdminAddAfterSave',
+            'Model.User.beforeSave' => 'modelBeforeSave',
+            'Model.User.afterSave'  => 'modelAfterSave'
         ];
     }
 
     /**
-     * On add user after save (ADMIN).
+     * Global before save user data.
      *
-     * @param Event $event
+     * @param   Event $event
+     *
+     * @return  void
      */
-    public function onAdminAddAfterSave(Event $event)
+    public function modelBeforeSave(Event $event)
     {
+        /** @var User $user */
+        $user = $event->getData('user');
     }
 
     /**
-     * On add user before save (ADMIN).
+     * Global after save user data.
      *
-     * @param Event $event
+     * @param   Event $event
+     *
+     * @return  void
+     *
+     * TODO : Use return when send message?
      */
-    public function onAdminAddBeforeSave(Event $event)
+    public function modelAfterSave(Event $event)
     {
+        /** @var User|bool $user */
+        $user = $event->getData('user');
+
+        if ($user instanceof EntityInterface) {
+            if ($user->isNew() && Filter::bool($user->get('notify'))) {
+                $this->_getMailer($user)->sendCreateMessage();
+            }
+        }
+    }
+
+    /**
+     * Get mailer object.
+     *
+     * @param   EntityInterface $entity
+     * @return  Email
+     */
+    protected function _getMailer(EntityInterface $entity)
+    {
+        return new Email($entity);
     }
 }

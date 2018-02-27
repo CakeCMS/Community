@@ -25,6 +25,7 @@
         "cakephp/bake"             : "~1.1",
         "satooshi/php-coveralls"   : "^1.0.2",
         "cakephp/plugin-installer" : "^0.0.15",
+        "cake-cms/extensions"      : "@dev",
         "psy/psysh"                : "@stable"
     },
     "autoload"     : {
