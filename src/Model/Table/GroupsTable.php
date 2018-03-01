@@ -30,8 +30,9 @@ class GroupsTable extends Table
     /**
      * Get tree group list.
      *
-     * @param array $options
-     * @return \Cake\ORM\Query
+     * @param   array $options  Behavior tree options.
+     *                          See https://book.cakephp.org/3.0/ru/orm/behaviors/tree.html
+     * @return  \Cake\ORM\Query
      */
     public function getTreeList(array $options = [])
     {
@@ -46,9 +47,9 @@ class GroupsTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config
-     * @return void
-     * @throws \RuntimeException
+     * @param   array $config Configuration options passed to the constructor.
+     * @return  void
+     * @throws  \RuntimeException
      */
     public function initialize(array $config)
     {
@@ -73,8 +74,8 @@ class GroupsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator
-     * @return Validator
+     * @param   Validator $validator The validator that can be modified to add some rules to it.
+     * @return  Validator
      */
     public function validationDefault(Validator $validator)
     {

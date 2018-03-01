@@ -71,7 +71,7 @@ class UsersController extends AppController
     /**
      * Change user password action.
      *
-     * @param   null|int $id
+     * @param   null|int $id User id.
      * @return  \Cake\Http\Response|null
      */
     public function changePassword($id = null)
@@ -97,7 +97,7 @@ class UsersController extends AppController
     /**
      * Edit action.
      *
-     * @param   null|int $id
+     * @param   null|int $id User id.
      * @return  \Cake\Http\Response|null
      *
      * @throws  RecordNotFoundException

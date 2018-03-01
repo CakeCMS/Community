@@ -65,7 +65,7 @@ class GroupsController extends AppController
     /**
      * Move down group action.
      *
-     * @param   int $id
+     * @param   int $id Group id.
      * @return  \Cake\Http\Response|null
      */
     public function down($id)
@@ -76,7 +76,7 @@ class GroupsController extends AppController
     /**
      * Edit action.
      *
-     * @param   int $id
+     * @param   int $id Group id.
      * @return  \Cake\Http\Response|null
      *
      * @throws  RecordNotFoundException
@@ -146,7 +146,7 @@ class GroupsController extends AppController
     /**
      * Move up group action.
      *
-     * @param   int $id
+     * @param   int $id Group id.
      * @return  \Cake\Http\Response|null
      *
      * @SuppressWarnings(PHPMD.ShortMethodName)

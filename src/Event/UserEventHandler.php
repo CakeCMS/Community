@@ -38,9 +38,21 @@ class UserEventHandler implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Model.User.beforeSave' => 'modelBeforeSave',
-            'Model.User.afterSave'  => 'modelAfterSave'
+            'Model.User.afterSave'             => 'onModelAfterSave',
+            'Model.User.beforeSave'            => 'onModelBeforeSave',
+            'Controller.Users.successActivate' => 'onSuccessActivate'
         ];
+    }
+
+    /**
+     * On success user activation profile.
+     *
+     * @param Event $event
+     *
+     * @return void
+     */
+    public function onSuccessActivate(Event $event)
+    {
     }
 
     /**
@@ -50,7 +62,7 @@ class UserEventHandler implements EventListenerInterface
      *
      * @return  void
      */
-    public function modelBeforeSave(Event $event)
+    public function onModelBeforeSave(Event $event)
     {
         /** @var User $user */
         $user = $event->getData('user');
@@ -65,7 +77,7 @@ class UserEventHandler implements EventListenerInterface
      *
      * TODO : Use return when send message?
      */
-    public function modelAfterSave(Event $event)
+    public function onModelAfterSave(Event $event)
     {
         /** @var User|bool $user */
         $user = $event->getData('user');

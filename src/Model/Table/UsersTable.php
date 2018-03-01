@@ -36,7 +36,7 @@ class UsersTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param   array $config
+     * @param   array $config Configuration options passed to the constructor.
      * @return  void
      *
      * @throws  \RuntimeException
@@ -91,7 +91,7 @@ class UsersTable extends Table
     /**
      * Default validation rules.
      *
-     * @param   Validator $validator
+     * @param   Validator $validator The validator that can be modified to add some rules to it.
      * @return  Validator
      */
     public function validationDefault(Validator $validator)

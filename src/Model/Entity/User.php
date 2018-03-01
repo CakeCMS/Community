@@ -67,7 +67,7 @@ class User extends Entity
     /**
      * Setup password.
      *
-     * @param   string $password
+     * @param   string $password    User password for create hashed.
      * @return  null|string
      */
     protected function _setPassword($password)
