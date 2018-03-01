@@ -13,16 +13,15 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-use Cake\Routing\Router;
-use Cake\Routing\RouteBuilder;
+namespace Community\Controller;
 
-Router::plugin('Community', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->connect('/community/:controller/:action/*', []);
-    });
+use Core\Controller\AppController as CoreAppController;
 
-    $routeBuilder->connect('profile/:action/*', [
-        'controller' => 'Users',
-        'plugin'     => 'Community'
-    ]);
-});
+/**
+ * Class AppController
+ *
+ * @package Community\Controller
+ */
+class AppController extends CoreAppController
+{
+}

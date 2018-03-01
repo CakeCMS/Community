@@ -48,7 +48,8 @@ class UsersController extends AppController
                 $user->set('token', Token::generate());
             }
 
-            if ($result = $this->Users->save($user)) {
+            $result = $this->Users->save($user);
+            if ($result) {
                 $this->Flash->success(__d('community', 'The user {0} has been saved.', sprintf(
                     '<strong>«%s»</strong>',
                     $result->get('login')

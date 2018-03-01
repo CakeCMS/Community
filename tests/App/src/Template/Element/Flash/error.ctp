@@ -11,18 +11,7 @@
  * @copyright   MIT License http://www.opensource.org/licenses/mit-license.php
  * @link        https://github.com/CakeCMS/Community".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
+ * @var         string $message
  */
 
-use Cake\Routing\Router;
-use Cake\Routing\RouteBuilder;
-
-Router::plugin('Community', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->connect('/community/:controller/:action/*', []);
-    });
-
-    $routeBuilder->connect('profile/:action/*', [
-        'controller' => 'Users',
-        'plugin'     => 'Community'
-    ]);
-});
+echo $message;

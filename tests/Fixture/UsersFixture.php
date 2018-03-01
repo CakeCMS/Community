@@ -25,6 +25,8 @@ use Cake\TestSuite\Fixture\TestFixture;
 class UsersFixture extends TestFixture
 {
 
+    const GROUP_ADMIN = 4;
+
     /**
      * Full Table Name
      *
@@ -65,7 +67,7 @@ class UsersFixture extends TestFixture
         $this->records = [
             [
                 'id'          => 1,
-                'group_id'    => GROUP_ADMIN,
+                'group_id'    => self::GROUP_ADMIN,
                 'login'       => 'admin',
                 'name'        => 'admin',
                 'slug'        => 'admin',
@@ -78,7 +80,39 @@ class UsersFixture extends TestFixture
                 'last_action' => '0000-00-00 00:00:00',
                 'modified'    => '0000-00-00 00:00:00',
                 'created'     => '0000-00-00 00:00:00'
-            ]
+            ],
+            [
+                'id'          => 2,
+                'group_id'    => self::GROUP_ADMIN,
+                'login'       => 'tester',
+                'name'        => 'tester',
+                'slug'        => 'tester',
+                'email'       => 'tester@test.ru',
+                'password'    => '1234',
+                'token'       => 22222,
+                'status'      => 0,
+                'params'      => '',
+                'last_login'  => '0000-00-00 00:00:00',
+                'last_action' => '0000-00-00 00:00:00',
+                'modified'    => '0000-00-00 00:00:00',
+                'created'     => '0000-00-00 00:00:00'
+            ],
+            [
+                'id'          => 3,
+                'group_id'    => self::GROUP_ADMIN,
+                'login'       => 'tester3',
+                'name'        => 'tester3',
+                'slug'        => 'tester3',
+                'email'       => 'tester@test.ru',
+                'password'    => '1234',
+                'token'       => 33333,
+                'status'      => true,
+                'params'      => '',
+                'last_login'  => '0000-00-00 00:00:00',
+                'last_action' => '0000-00-00 00:00:00',
+                'modified'    => '0000-00-00 00:00:00',
+                'created'     => '0000-00-00 00:00:00'
+            ],
         ];
 
         parent::init();

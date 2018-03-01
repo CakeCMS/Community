@@ -13,7 +13,7 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-namespace Community\Test\TestCase;
+namespace Community\Test\TestCase\Controller\Admin;
 
 use Cake\Utility\Hash;
 use Test\Cases\IntegrationTestCase;
@@ -28,7 +28,10 @@ use Community\Controller\Admin\UsersController;
 class UsersControllerTest extends IntegrationTestCase
 {
 
-    public $fixtures = ['plugin.community.users'];
+    public $fixtures = [
+        'plugin.community.users',
+        'plugin.community.groups',
+    ];
 
     protected $_corePlugin = 'Community';
 
@@ -66,12 +69,12 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->post($url, $this->_getData([
             'action'           => 'save',
-            'login'            => 'tester',
-            'name'             => 'tester',
-            'slug'             => 'tester',
             'password'         => '123456',
             'password_confirm' => '123456',
-            'email'            => 'tester@gmail.com'
+            'login'            => 'new-user',
+            'name'             => 'new-user',
+            'slug'             => 'new-user',
+            'email'            => 'new-user@mail.com'
         ]));
 
         $this->assertResponseSuccess();
