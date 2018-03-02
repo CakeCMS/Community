@@ -116,9 +116,9 @@ class UsersController extends AppController
 
                 if (!$user->status && $result->token !== null) {
                     return $this->redirect([
-                        'id'     => $user->id,
                         'action' => 'activate',
-                        'token'  => $user->token
+                        $user->id,
+                        $user->token
                     ]);
                 }
 

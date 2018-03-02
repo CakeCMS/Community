@@ -47,12 +47,15 @@ class UserEventHandler implements EventListenerInterface
     /**
      * On success user activation profile.
      *
-     * @param Event $event
+     * @param   Event $event
      *
-     * @return void
+     * @return  void
      */
     public function onSuccessActivate(Event $event)
     {
+        /** @var User|bool $user */
+        $user = $event->getData('user');
+        $this->_getMailer($user)->sendActivationMessage();
     }
 
     /**

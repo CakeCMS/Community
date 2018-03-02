@@ -38,19 +38,33 @@ class Email extends CoreEmail
     protected $_params;
 
     /**
+     * Send user message when have success activation profile.
+     *
+     * @return  array
+     */
+    public function sendActivationMessage()
+    {
+        $macros  = new Macros($this->_data);
+        $message = $this->_params->get('msg_account_activate_msg');
+        $message = $macros->text($message);
+        $subject = $this->_params->get('msg_account_activate_subject');
+
+        return $this->send($subject, $message, $this->_data->email, null, $this->_getFromMail());
+    }
+
+    /**
      * Send user create account profile message / set password.
      *
      * @return  array
      */
     public function sendCreateMessage()
     {
-        $from    = Plugin::getParams('Core')->get('admin_email');
         $macros  = new Macros($this->_data);
         $message = $this->_params->get('msg_account_create_msg');
         $message = $macros->text($message);
         $subject = $this->_params->get('msg_account_create_subject');
 
-        return $this->send($subject, $message, $this->_data->email, null, $from);
+        return $this->send($subject, $message, $this->_data->email, null, $this->_getFromMail());
     }
 
     /**
@@ -61,5 +75,15 @@ class Email extends CoreEmail
     protected function _initialize()
     {
         $this->_params = Plugin::getParams('Community');
+    }
+
+    /**
+     * Get from email - global settings.
+     *
+     * @return  string
+     */
+    protected function _getFromMail()
+    {
+        return Plugin::getParams('Core')->get('admin_email');
     }
 }

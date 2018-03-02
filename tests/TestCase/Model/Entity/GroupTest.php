@@ -45,6 +45,8 @@ class GroupTest extends TestCase
         self::assertArrayHasKey('params',    $group);
         self::assertArrayHasKey('parent_id', $group);
 
+        self::assertInstanceOf('Community\Model\Entity\Group', $entity);
+        self::assertInstanceOf('Community\Model\Entity\Group', $table->get(1));
         self::assertInstanceOf($table->getEntityClass(), $entity);
     }
 }

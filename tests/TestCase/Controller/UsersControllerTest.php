@@ -176,8 +176,8 @@ class UsersControllerTest extends IntegrationTestCase
             'controller' => 'Users',
             'action'     => 'activate',
             'plugin'     => 'Community',
-            'id'         => $userId,
-            'token'      => 22222
+            $userId,
+            22222
         ]);
     }
 

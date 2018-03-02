@@ -15,6 +15,7 @@
 
 namespace Community\Model\Entity;
 
+use Cake\Routing\Router;
 use Cake\I18n\FrozenTime;
 use Core\ORM\Entity\Entity;
 use Cake\Auth\DefaultPasswordHasher;
@@ -51,7 +52,8 @@ class User extends Entity
      * @var array
      */
     protected $_virtual = [
-        'activation_url'
+        'activation_url',
+        'setup_password_url'
     ];
 
     /**
@@ -61,7 +63,29 @@ class User extends Entity
      */
     protected function _getActivationUrl()
     {
-        return '/activation/user/1';
+        return Router::url([
+            'controller' => 'Users',
+            'action'     => 'activate',
+            'plugin'     => 'Community',
+            $this->id,
+            $this->token
+        ], true);
+    }
+
+    /**
+     * set virtual field setup_password_url
+     *
+     * @return string
+     */
+    protected function _getSetupPasswordUrl()
+    {
+        return Router::url([
+            'controller' => 'Users',
+            'plugin'     => 'Community',
+            'action'     => 'setupPassword',
+            $this->id,
+            $this->token
+        ], true);
     }
 
     /**

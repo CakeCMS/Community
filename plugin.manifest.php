@@ -40,13 +40,28 @@ return [
             'msg_account_create_subject' => [
                 'type'    => 'text',
                 'label'   => __d('community', 'Message create subject'),
-                'default' => __d('community', 'Account activation')
+                'default' => __d('community', 'Account created')
             ],
             'msg_account_create_msg' => [
                 'type'    => 'textarea',
                 'label'   => __d('community', 'Message create text'),
+                'default' => __d('community', 'You account created')
+            ],
+            'separator-1' => function(AppView $view) {
+                return $view->Html->tag('h4', __d('community', 'Activation account message settings'), [
+                    'ck-param-separator'
+                ]);
+            },
+            'msg_account_activate_subject' => [
+                'type'    => 'text',
+                'label'   => __d('community', 'Message activate subject'),
                 'default' => __d('community', 'Account activation')
-            ]
+            ],
+            'msg_account_activate_msg' => [
+                'type'    => 'textarea',
+                'label'   => __d('community', 'Message create text'),
+                'default' => __d('community', 'Account activation')
+            ],
         ]
     ]
 ];
