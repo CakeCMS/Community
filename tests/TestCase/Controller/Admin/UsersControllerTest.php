@@ -16,14 +16,16 @@
 namespace Community\Test\TestCase\Controller\Admin;
 
 use Cake\Utility\Hash;
+use Cake\ORM\TableRegistry;
+use Community\Model\Entity\User;
 use Test\Cases\IntegrationTestCase;
 use Community\Controller\Admin\UsersController;
 
 /**
  * Class UsersControllerTest
  *
- * @package Community\Test\TestCase
- * @property UsersController|null $_controller
+ * @package     Community\Test\TestCase
+ * @property    UsersController|null $_controller
  */
 class UsersControllerTest extends IntegrationTestCase
 {
@@ -47,11 +49,11 @@ class UsersControllerTest extends IntegrationTestCase
 
     public function testAddFail()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $url = $this->_getUrl([
-            'action' => 'add'
-        ]);
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
+
+        $url = $this->_getUrl(['action' => 'add']);
         $this->post($url, $this->_getData());
 
         $this->assertNoRedirect();
@@ -61,11 +63,11 @@ class UsersControllerTest extends IntegrationTestCase
 
     public function testAddSuccess()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $url = $this->_getUrl([
-            'action' => 'add'
-        ]);
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
+
+        $url = $this->_getUrl(['action' => 'add']);
 
         $this->post($url, $this->_getData([
             'action'           => 'save',
@@ -86,10 +88,133 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
     }
 
+    public function testAddSuccessNotify()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
+
+        $url = $this->_getUrl(['action' => 'add']);
+
+        $this->post($url, $this->_getData([
+            'notify'           => 1,
+            'action'           => 'save',
+            'password'         => '123456',
+            'password_confirm' => '123456',
+            'login'            => 'user-notify',
+            'name'             => 'user-notify',
+            'slug'             => 'user-notify',
+            'email'            => 'new-user-notify@mail.com'
+        ]));
+
+        $this->assertResponseSuccess();
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'controller' => 'Users',
+            'action'     => 'index',
+            'plugin'     => 'Community'
+        ]);
+
+        /** @var User $user */
+        $user = $this->_controller->Users->findByLogin('user-notify')->first();
+        self::assertNotNull($user->token);
+    }
+
+    public function testEditFail()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->enableRetainFlashMessages();
+
+        $userId = 2;
+        $url    = $this->_getUrl(['action' => 'edit', $userId]);
+
+        $table = TableRegistry::get('Community.Users');
+        /** @var User $user */
+        $user = $table->get($userId);
+
+        self::assertSame('tester', $user->name);
+
+        $this->post($url, [
+            'action'           => 'save',
+            'id'               => $userId,
+            'login'            => 'new-user',
+            'name'             => 'new-user',
+            'slug'             => 'new-user',
+            'email'            => 'new-user@mail.com',
+            'password'         => ''
+        ]);
+
+        $this->assertSession(
+            __d('community', 'User could not be updated. Please, try again.'),
+            'Flash.flash.0.message'
+        );
+
+        self::assertTrue(is_array($this->_controller->viewVars));
+        self::assertArrayHasKey('user', $this->_controller->viewVars);
+        self::assertArrayHasKey('groups', $this->_controller->viewVars);
+        self::assertArrayHasKey('page_title', $this->_controller->viewVars);
+
+        self::assertSame(
+            __d('community', 'Profiles: Edit user - {0}', 'new-user'),
+            $this->viewVariable('page_title')
+        );
+    }
+
+    public function testEditSuccess()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->enableRetainFlashMessages();
+
+        $userId = 2;
+        $url    = $this->_getUrl(['action' => 'edit', $userId]);
+
+        $table = TableRegistry::get('Community.Users');
+        /** @var User $user */
+        $user = $table->get($userId);
+
+        self::assertSame('tester', $user->name);
+
+        $this->post($url, [
+            'action'           => 'save',
+            'id'               => $userId,
+            'login'            => 'new-user',
+            'name'             => 'new-user',
+            'slug'             => 'new-user',
+            'email'            => 'new-user@mail.com'
+        ]);
+
+        $this->assertResponseSuccess();
+
+        $user = $this->_controller->Users->get($userId);
+
+        self::assertSame($userId, $user->id);
+        self::assertSame('new-user', $user->name);
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'controller' => 'Users',
+            'action'     => 'index',
+            'plugin'     => 'Community'
+        ]);
+
+        $this->assertSession(
+            __d('community', 'The user {0} has been saved.', sprintf(
+                '<strong>«%s»</strong>',
+                $user->login
+            )),
+            'Flash.flash.0.message'
+        );
+    }
+
     public function testFailChangePassword()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
 
         $userId = 1;
 
@@ -106,16 +231,33 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseContains(__d('community', 'Password could not be updated. Please, try again.'));
     }
 
+    public function testIndex()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
+
+        $url = $this->_getUrl(['action' => 'index']);
+        $this->get($url);
+
+        self::assertTrue(is_array($this->_controller->viewVars));
+        self::assertArrayHasKey('page_title', $this->_controller->viewVars);
+        self::assertArrayHasKey('users', $this->_controller->viewVars);
+
+        self::assertSame(__d('community', 'Profiles: User list'), $this->_controller->viewVars['page_title']);
+        self::assertInstanceOf('Cake\ORM\ResultSet', $this->_controller->viewVars['users']);
+    }
+
     /**
      * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function testProcessSuccessDelete()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $url = $this->_getUrl([
-            'action' => 'process'
-        ]);
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
+
+        $url = $this->_getUrl(['action' => 'process']);
 
         $this->post($url, [
             'user' => [
@@ -138,8 +280,9 @@ class UsersControllerTest extends IntegrationTestCase
 
     public function testSuccessChangePassword()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
 
         $userId = 1;
 
