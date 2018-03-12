@@ -78,10 +78,21 @@ class UsersController extends AppController
     /**
      * Login action.
      *
-     * @return void
+     * @return  \Cake\Http\Response|null
      */
     public function login()
     {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user !== false) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+
+            $this->Flash->error(__d('community', 'Login or password is incorrect'));
+        }
+
+        $this->set('page_title', __d('community', 'Authorize profile'));
     }
 
     /**
@@ -93,7 +104,6 @@ class UsersController extends AppController
     {
         return $this->redirect($this->Auth->logout());
     }
-
 
     /**
      * Setup password action.

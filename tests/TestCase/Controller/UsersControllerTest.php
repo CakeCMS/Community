@@ -130,6 +130,62 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertResponseError(__d('community', 'User was not found'));
     }
 
+    public function testLogin()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->enableRetainFlashMessages();
+
+        $url = $this->_getUrl(['action' => 'login']);
+
+        $this->post($url, [
+            'login'    => 'login',
+            'password' => 'password'
+        ]);
+
+        $this->assertResponseOk();
+
+        $this->assertSession(
+            __d('community', 'Login or password is incorrect'),
+            'Flash.flash.0.message'
+        );
+
+        self::assertTrue(is_array($this->_controller->viewVars));
+        self::assertArrayHasKey('page_title', $this->_controller->viewVars);
+        self::assertSame(__d('community', 'Authorize profile'), $this->_controller->viewVars['page_title']);
+
+        $this->post($url, [
+            'login'    => 'admin',
+            'password' => '375210'
+        ]);
+
+        $this->assertRedirect([
+            'prefix'     => false,
+            'action'     => 'edit',
+            'controller' => 'Users',
+            'plugin'     => 'Community'
+        ]);
+    }
+
+    public function testLogout()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
+
+        $url = $this->_getUrl(['action' => 'logout']);
+        $this->get($url);
+
+        $this->assertRedirect([
+            'prefix'     => false,
+            'action'     => 'login',
+            'controller' => 'Users',
+            'plugin'     => 'Community'
+        ]);
+    }
+
     public function testSetupPasswordActiveUser()
     {
         $this
