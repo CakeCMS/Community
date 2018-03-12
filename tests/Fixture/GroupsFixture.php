@@ -77,7 +77,7 @@ class GroupsFixture extends TestFixture
                 'rght'      => 3
             ],
             [
-                'id'        => 3,
+                'id'        => 4,
                 'parent_id' => 1,
                 'name'      => 'Admin',
                 'slug'      => 'admin',

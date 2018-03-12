@@ -241,7 +241,7 @@ class GroupsControllerTest extends IntegrationTestCase
             ->enableSecurityToken()
             ->_setAuthUserData();
 
-        $id  = 3;
+        $id  = 4;
         $url = $this->_getUrl(['action' => 'up', $id]);
 
         /** @var GroupsTable $table */
