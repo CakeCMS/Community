@@ -85,6 +85,17 @@ class UsersController extends AppController
     }
 
     /**
+     * Logout action.
+     *
+     * @return  \Cake\Http\Response|null
+     */
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
+    }
+
+
+    /**
      * Setup password action.
      *
      * @param   null|int $id        User id.
