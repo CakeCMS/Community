@@ -15,12 +15,11 @@
 
 namespace Community\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
-use Community\Model\Entity\User;
 use Core\Plugin;
-use Test\Cases\IntegrationTestCase;
+use Cake\ORM\TableRegistry;
+use Community\Model\Entity\User;
 use Community\Controller\UsersController;
+use Test\App\TestCase\AppControllerTest as IntegrationTestCase;
 
 /**
  * Class UsersControllerTest
@@ -53,7 +52,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 3;
         $url    = $this->_getUrl(['action' => 'activate', $userId, 33333]);
@@ -81,7 +81,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 2;
         $table  = TableRegistry::get('Community.Users');
@@ -119,7 +120,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $userId = 1111;
         $url    = $this->_getUrl(['action' => 'activate', $userId, 33333]);
@@ -133,7 +135,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 3;
         $url    = $this->_getUrl(['action' => 'setupPassword', $userId, 33333]);
@@ -161,7 +164,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 2;
         $url    = $this->_getUrl(['action' => 'setupPassword', $userId, 22222]);
@@ -185,7 +189,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'setupPassword', 111, 'token']);
 
@@ -198,7 +203,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 2;
         $url    = $this->_getUrl(['action' => 'setupPassword', $userId, 22222]);

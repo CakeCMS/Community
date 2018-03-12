@@ -14,6 +14,8 @@
  */
 
 use Core\View\AppView;
+use Cake\Controller\Controller;
+use Community\Model\Entity\User;
 
 return [
     'meta' => [
@@ -27,9 +29,23 @@ return [
         'description' => 'Community plugin for UnionCMS',
         'core'        => true
     ],
+
     'events' => [
         'Community.UserEventHandler',
     ],
+
+    'Controller.initialize' => function (Controller $controller) {
+        $controller->loadComponent('Community.Auth');
+        if ($controller->request->getParam('prefix') === 'admin') {
+            $controller->loadComponent('Community.User');
+        }
+    },
+
+    'Controller.beforeFilter' => function (Controller $controller) {
+        $user = new User((array) $controller->Auth->user());
+        $controller->set('authorized', $user);
+    },
+
     'params' => [
         'Messages' => [
             'separator' => function(AppView $view) {

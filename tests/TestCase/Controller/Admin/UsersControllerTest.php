@@ -18,8 +18,8 @@ namespace Community\Test\TestCase\Controller\Admin;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
 use Community\Model\Entity\User;
-use Test\Cases\IntegrationTestCase;
 use Community\Controller\Admin\UsersController;
+use Test\App\TestCase\AppControllerTest as IntegrationTestCase;
 
 /**
  * Class UsersControllerTest
@@ -40,6 +40,7 @@ class UsersControllerTest extends IntegrationTestCase
     public function setUp()
     {
         parent::setUp();
+
         $this->_url = $this->_getUrl([
             'prefix'     => 'admin',
             'controller' => 'Users',
@@ -51,7 +52,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'add']);
         $this->post($url, $this->_getData());
@@ -65,7 +67,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'add']);
 
@@ -92,7 +95,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'add']);
 
@@ -125,7 +129,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 2;
         $url    = $this->_getUrl(['action' => 'edit', $userId]);
@@ -167,7 +172,8 @@ class UsersControllerTest extends IntegrationTestCase
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
-            ->enableRetainFlashMessages();
+            ->enableRetainFlashMessages()
+            ->_setAuthUserData();
 
         $userId = 2;
         $url    = $this->_getUrl(['action' => 'edit', $userId]);
@@ -214,7 +220,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $userId = 1;
 
@@ -235,7 +242,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'index']);
         $this->get($url);
@@ -248,6 +256,62 @@ class UsersControllerTest extends IntegrationTestCase
         self::assertInstanceOf('Cake\ORM\ResultSet', $this->_controller->viewVars['users']);
     }
 
+    public function testLogin()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->enableRetainFlashMessages();
+
+        $url = $this->_getUrl(['action' => 'login']);
+
+        $this->post($url, [
+            'login'    => 'login',
+            'password' => 'password'
+        ]);
+
+        $this->assertResponseOk();
+
+        $this->assertSession(
+            __d('community', 'Login or password is incorrect'),
+            'Flash.flash.0.message'
+        );
+
+        self::assertTrue(is_array($this->_controller->viewVars));
+        self::assertArrayHasKey('page_title', $this->_controller->viewVars);
+        self::assertSame(__d('community', 'Authorize profile'), $this->_controller->viewVars['page_title']);
+
+        $this->post($url, [
+            'login'    => 'admin',
+            'password' => '375210'
+        ]);
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'action'     => 'index',
+            'controller' => 'Users',
+            'plugin'     => 'Community'
+        ]);
+    }
+
+    public function testLogout()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
+
+        $url = $this->_getUrl(['action' => 'logout']);
+        $this->get($url);
+
+        $this->assertRedirect([
+            'prefix'     => 'admin',
+            'action'     => 'login',
+            'controller' => 'Users',
+            'plugin'     => 'Community'
+        ]);
+    }
+
     /**
      * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
      */
@@ -255,7 +319,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'process']);
 
@@ -282,7 +347,8 @@ class UsersControllerTest extends IntegrationTestCase
     {
         $this
             ->enableCsrfToken()
-            ->enableSecurityToken();
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $userId = 1;
 

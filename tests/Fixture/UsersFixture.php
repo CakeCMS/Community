@@ -72,7 +72,9 @@ class UsersFixture extends TestFixture
                 'name'        => 'admin',
                 'slug'        => 'admin',
                 'email'       => 'admin@test.ru',
-                'password'    => '1234',
+
+                //  No hash password: 375210
+                'password'    => '$2y$10$3.PsjhmjvGAkO5dsckaos.7JD/xHcQBq06XBjGPQkdxNliBn2C5fm',
                 'token'       => '',
                 'status'      => 1,
                 'params'      => '',

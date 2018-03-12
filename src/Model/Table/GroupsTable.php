@@ -67,6 +67,12 @@ class GroupsTable extends Table
                     'foreignKey' => 'parent_id',
                     'className'  => 'Community.Group'
                 ]
+            ],
+            'hasMany' => [
+                'Users' => [
+                    'dependent' => true,
+                    'className' => 'Community.Users',
+                ]
             ]
         ]);
     }

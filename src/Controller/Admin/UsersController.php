@@ -19,6 +19,7 @@ use Community\Token;
 use JBZoo\Utils\Filter;
 use Community\Model\Entity\User;
 use Community\Model\Table\UsersTable;
+use Community\Controller\Component\AuthComponent;
 use Cake\ORM\Exception\RolledbackTransactionException;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\Exception\InvalidPrimaryKeyException;
@@ -27,6 +28,8 @@ use Cake\Datasource\Exception\InvalidPrimaryKeyException;
  * Class UsersController
  *
  * @package     Community\Controller\Admin
+ *
+ * @property    AuthComponent $Auth
  * @property    UsersTable $Users
  */
 class UsersController extends AppController
@@ -159,6 +162,37 @@ class UsersController extends AppController
     {
         parent::initialize();
         $this->Security->setConfig('unlockedFields', ['password', 'password_confirm']);
+    }
+
+    /**
+     * Login action.
+     *
+     * @return  \Cake\Http\Response|null
+     */
+    public function login()
+    {
+        $this->viewBuilder()->setLayout('login');
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user !== false) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+
+            $this->Flash->error(__d('community', 'Login or password is incorrect'));
+        }
+
+        $this->set('page_title', __d('community', 'Authorize profile'));
+    }
+
+    /**
+     * Logout action.
+     *
+     * @return  \Cake\Http\Response|null
+     */
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
     }
 
     /**

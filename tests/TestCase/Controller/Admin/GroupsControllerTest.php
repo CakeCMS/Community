@@ -17,9 +17,9 @@ namespace Community\Test\TestCase;
 
 use Cake\ORM\TableRegistry;
 use Community\Model\Entity\Group;
-use Test\Cases\IntegrationTestCase;
 use Community\Model\Table\GroupsTable;
 use Community\Controller\Admin\GroupsController;
+use Test\App\TestCase\AppControllerTest as IntegrationTestCase;
 
 /**
  * Class GroupsControllerTest
@@ -53,8 +53,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testAddFailed()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'add']);
 
@@ -74,8 +76,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testAddResponseSuccess()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'add']);
         $this->get($url);
@@ -84,8 +88,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testAddSuccess()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'add']);
 
@@ -100,8 +106,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testDown()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $id  = 2;
         $url = $this->_getUrl(['action' => 'down', $id]);
@@ -126,8 +134,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testEditFail()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'edit', 2]);
 
@@ -139,8 +149,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testEditResponseSuccess()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'edit', 2]);
 
@@ -151,8 +163,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testEditSuccess()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'edit', 2]);
 
@@ -173,8 +187,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testIndexSuccess()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'index']);
         $this->get($url);
@@ -186,8 +202,10 @@ class GroupsControllerTest extends IntegrationTestCase
      */
     public function testProcessDelete()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $url = $this->_getUrl(['action' => 'process']);
         $data = [
@@ -218,8 +236,10 @@ class GroupsControllerTest extends IntegrationTestCase
 
     public function testUp()
     {
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
 
         $id  = 3;
         $url = $this->_getUrl(['action' => 'up', $id]);
