@@ -57,6 +57,28 @@ class User extends Entity
     ];
 
     /**
+     * Get current user edit profile url.
+     *
+     * @param   bool $backend   Backend or frontend point.
+     * @return  string
+     */
+    public function getEditUrl($backend = false)
+    {
+        $url = [
+            'action'     => 'edit',
+            'controller' => 'Users',
+            'plugin'     => 'Community'
+        ];
+
+        if ($backend) {
+            $url['prefix'] = 'admin';
+            $url[] = $this->id;
+        }
+
+        return Router::url($url);
+    }
+
+    /**
      * Set virtual field activation_url.
      *
      * @return  string

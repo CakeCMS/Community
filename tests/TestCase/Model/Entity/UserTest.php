@@ -15,9 +15,11 @@
 
 namespace Community\Test\TestCase\Model\Entity;
 
+use Cake\Routing\Router;
 use Test\Cases\TestCase;
 use Cake\ORM\TableRegistry;
 use Community\Model\Entity\User;
+use Community\Model\Table\UsersTable;
 
 /**
  * Class UserTest
@@ -53,5 +55,28 @@ class UserTest extends TestCase
         self::assertArrayHasKey('last_action',  $user);
 
         self::assertInstanceOf($table->getEntityClass(), $entity);
+    }
+
+    public function testGetEditUrl()
+    {
+        /** @var UsersTable $table */
+        $table = TableRegistry::get('Community.Users');
+
+        $userId = 1;
+        $user   = $table->get($userId);
+
+        self::assertSame($user->getEditUrl(), Router::url([
+            'action'     => 'edit',
+            'controller' => 'Users',
+            'plugin'     => 'Community'
+        ]));
+
+        self::assertSame($user->getEditUrl(true), Router::url([
+            'action'     => 'edit',
+            'prefix'     => 'admin',
+            'controller' => 'Users',
+            'plugin'     => 'Community',
+            $userId
+        ]));
     }
 }
