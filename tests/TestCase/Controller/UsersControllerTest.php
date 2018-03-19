@@ -30,7 +30,10 @@ use Test\App\TestCase\AppControllerTest as IntegrationTestCase;
 class UsersControllerTest extends IntegrationTestCase
 {
 
-    public $fixtures = ['plugin.community.users'];
+    public $fixtures = [
+        'plugin.community.users',
+        'plugin.community.groups'
+    ];
 
     protected $_corePlugin = 'Community';
 
@@ -162,8 +165,8 @@ class UsersControllerTest extends IntegrationTestCase
 
         $this->assertRedirect([
             'prefix'     => false,
-            'action'     => 'edit',
             'controller' => 'Users',
+            'action'     => 'profile',
             'plugin'     => 'Community'
         ]);
     }
@@ -280,5 +283,41 @@ class UsersControllerTest extends IntegrationTestCase
 
         self::assertSame(__d('community', 'Setup new password'), $this->_controller->viewVars['page_title']);
         self::assertInstanceOf('Community\Model\Entity\User', $this->_controller->viewVars['user']);
+    }
+
+    public function testProfile()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->_setAuthUserData();
+
+        $this->get($this->_getUrl(['action' => 'profile']));
+
+        self::assertTrue(is_array($this->_controller->viewVars));
+        self::assertArrayHasKey('user', $this->_controller->viewVars);
+        self::assertArrayHasKey('page_title', $this->_controller->viewVars);
+    }
+
+    public function testProfileNotAuth()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken();
+
+        $this->session([
+            'Auth' => [
+                'User' => []
+            ]
+        ]);
+
+        $this->get($this->_getUrl(['action' => 'profile']));
+
+        $this->assertRedirect([
+            'controller' => 'Users',
+            'action'     => 'login',
+            'plugin'     => 'Community',
+            'redirect'   => '/profile/profile'
+        ]);
     }
 }

@@ -40,8 +40,8 @@ class AuthComponent extends BaseAuthComponent
 
         if (!$this->request->getParam('prefix')) {
             $redirect = [
-                'action'     => 'edit',
                 'controller' => 'Users',
+                'action'     => 'profile',
                 'plugin'     => 'Community'
             ];
         }

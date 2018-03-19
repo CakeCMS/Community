@@ -13,3 +13,58 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  * @var         \Core\View\AppView $this
  */
+
+echo $this->Form->create();
+?>
+    <div class="row">
+        <div class="col s12">
+            <p class="center">
+                <?= __d('community', 'Auth') ?>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <?php
+            echo $this->Form->control('login', [
+                'before' => 'icon:user'
+            ]);
+            echo $this->Form->control('password', [
+                'before' => 'icon:lock'
+            ]);
+            echo $this->Form->button(__d('community', 'Login'), [
+                'button' => true,
+                'class'  => 'col s12 pink lighten-1',
+                'icon'   => 'sign-in-alt'
+            ]);
+            ?>
+            <div class="row">
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin medium-small">
+                        <?php
+                        echo $this->Html->link(__d('community', 'Register Now!'), [
+                            'prefix'     => false,
+                            'action'     => 'add',
+                            'controller' => 'Users',
+                            'plugin'     => 'Community'
+                        ]);
+                        ?>
+                    </p>
+                </div>
+                <div class="input-field col s6 m6 l6">
+                    <p class="margin right-align medium-small">
+                        <?php
+                        echo $this->Html->link(__d('community', 'Forgot password ?'), [
+                            'prefix'     => false,
+                            'controller' => 'Users',
+                            'action'     => 'forgot',
+                            'plugin'     => 'Community'
+                        ]);
+                        ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+echo $this->Form->end();

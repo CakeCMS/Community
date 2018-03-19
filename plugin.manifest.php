@@ -46,6 +46,12 @@ return [
         $controller->set('authorized', $user);
     },
 
+    'View.initialize' => function (AppView $view) {
+        if ($view->request->getData('plugin') === 'Community') {
+            $view->Html->less(['Community.styles.less'], ['block' => true, 'fullBase' => true, 'force' => true]);
+        }
+    },
+
     'params' => [
         'Messages' => [
             'separator' => function(AppView $view) {

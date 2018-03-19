@@ -30,6 +30,24 @@ class UsersController extends AppController
 {
 
     /**
+     * Default profile page action.
+     *
+     * @return void
+     */
+    public function profile()
+    {
+        $userId = $this->Auth->user('id');
+        if (!$userId) {
+            $this->Flash->error(__d('community', 'You are not logged in'));
+            $this->redirect($this->Auth->getConfig('loginAction'));
+        }
+
+        $this
+            ->set('user', $this->Users->get($userId, ['contain' => 'Groups']))
+            ->set('page_title', __d('community', 'Edit profile'));
+    }
+
+    /**
      * Activation user profile action.
      *
      * @param   null|int $id            User id.

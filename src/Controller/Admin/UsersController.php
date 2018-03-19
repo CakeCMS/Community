@@ -156,6 +156,7 @@ class UsersController extends AppController
      *
      * @return  void
      *
+     * @throws  \JBZoo\Utils\Exception
      * @throws  \Cake\Core\Exception\Exception
      */
     public function initialize()
