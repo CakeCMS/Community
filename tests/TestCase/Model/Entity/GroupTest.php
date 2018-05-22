@@ -16,7 +16,6 @@
 namespace Community\Test\TestCase\Model\Entity;
 
 use Test\Cases\TestCase;
-use Cake\ORM\TableRegistry;
 use Community\Model\Entity\Group;
 
 /**
@@ -34,7 +33,7 @@ class GroupTest extends TestCase
     public function testClassName()
     {
         $entity = new Group();
-        $table  = TableRegistry::get('Community.Groups');
+        $table  = $this->_getTable('Groups');
         $group  = $table->get(1)->toArray();
 
         self::assertArrayHasKey('id',        $group);

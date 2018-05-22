@@ -82,6 +82,8 @@ class GroupsTable extends Table
      *
      * @param   Validator $validator The validator that can be modified to add some rules to it.
      * @return  Validator
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function validationDefault(Validator $validator)
     {
@@ -100,7 +102,7 @@ class GroupsTable extends Table
             ->add('slug', 'unique', [
                 'message'  => __d('community', 'Group with this slug already exists.'),
                 'rule'     => 'validateUnique',
-                'provider' => 'table',
+                'provider' => 'table'
             ]);
 
         return $validator;

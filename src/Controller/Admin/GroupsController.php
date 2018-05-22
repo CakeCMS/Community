@@ -40,6 +40,7 @@ class GroupsController extends AppController
      * @return  mixed
      *
      * @throws  RolledbackTransactionException
+     * @throws  \Aura\Intl\Exception
      */
     public function add()
     {
@@ -82,6 +83,7 @@ class GroupsController extends AppController
      * @throws  RecordNotFoundException
      * @throws  InvalidPrimaryKeyException
      * @throws  RolledbackTransactionException
+     * @throws  \Aura\Intl\Exception
      */
     public function edit($id)
     {
@@ -108,6 +110,8 @@ class GroupsController extends AppController
      * Index action.
      *
      * @return  void
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function index()
     {
@@ -120,6 +124,8 @@ class GroupsController extends AppController
      *
      * @return  void
      *
+     * @throws  \Aura\Intl\Exception
+     * @throws  \JBZoo\Utils\Exception
      * @throws  \Cake\Core\Exception\Exception When trying to set a key that is invalid.
      */
     public function initialize()
@@ -136,6 +142,8 @@ class GroupsController extends AppController
      * Process action.
      *
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function process()
     {

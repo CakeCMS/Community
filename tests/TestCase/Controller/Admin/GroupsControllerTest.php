@@ -15,7 +15,6 @@
 
 namespace Community\Test\TestCase;
 
-use Cake\ORM\TableRegistry;
 use Community\Model\Entity\Group;
 use Community\Model\Table\GroupsTable;
 use Community\Controller\Admin\GroupsController;
@@ -51,6 +50,10 @@ class GroupsControllerTest extends IntegrationTestCase
         ]);
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testAddFailed()
     {
         $this
@@ -74,6 +77,9 @@ class GroupsControllerTest extends IntegrationTestCase
         $this->assertResponseContains(__d('community', 'The group could not be saved. Please, try again.'));
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testAddResponseSuccess()
     {
         $this
@@ -86,6 +92,9 @@ class GroupsControllerTest extends IntegrationTestCase
         $this->assertResponseOk();
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testAddSuccess()
     {
         $this
@@ -104,6 +113,9 @@ class GroupsControllerTest extends IntegrationTestCase
         ]);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testDown()
     {
         $this
@@ -115,7 +127,7 @@ class GroupsControllerTest extends IntegrationTestCase
         $url = $this->_getUrl(['action' => 'down', $id]);
 
         /** @var GroupsTable $table */
-        $table  = TableRegistry::get('Community.Groups');
+        $table  = $this->_getTable('Groups');
         /** @var Group $entity */
         $entity = $table->get($id);
 
@@ -132,6 +144,10 @@ class GroupsControllerTest extends IntegrationTestCase
         self::assertSame(5, $entity->rght);
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testEditFail()
     {
         $this
@@ -147,6 +163,9 @@ class GroupsControllerTest extends IntegrationTestCase
         $this->assertResponseContains(__d('community', 'The group could not be updated. Please, try again.'));
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testEditResponseSuccess()
     {
         $this
@@ -161,6 +180,9 @@ class GroupsControllerTest extends IntegrationTestCase
         $this->assertResponseSuccess();
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testEditSuccess()
     {
         $this
@@ -185,6 +207,9 @@ class GroupsControllerTest extends IntegrationTestCase
         ]);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testIndexSuccess()
     {
         $this
@@ -198,7 +223,8 @@ class GroupsControllerTest extends IntegrationTestCase
     }
 
     /**
-     * @expectedException \Cake\Datasource\Exception\RecordNotFoundException
+     * @throws              \PHPUnit\Exception
+     * @expectedException   \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function testProcessDelete()
     {
@@ -234,6 +260,9 @@ class GroupsControllerTest extends IntegrationTestCase
         $controller->Groups->get(2);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testUp()
     {
         $this
@@ -245,7 +274,7 @@ class GroupsControllerTest extends IntegrationTestCase
         $url = $this->_getUrl(['action' => 'up', $id]);
 
         /** @var GroupsTable $table */
-        $table  = TableRegistry::get('Community.Groups');
+        $table  = $this->_getTable('Groups');
         /** @var Group $entity */
         $entity = $table->get($id);
 

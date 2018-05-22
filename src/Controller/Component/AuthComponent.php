@@ -52,18 +52,20 @@ class AuthComponent extends BaseAuthComponent
      * Sets defaults for configs.
      *
      * @return  void
+     *
+     * @throws  \Aura\Intl\Exception
      */
     protected function _setDefaults()
     {
         $defaults = [
             'authenticate' => [
                 'Form' => [
-                    'userModel' => 'Users',
-                    'scope'     => ['Users.status' => 1],
+                    'finder'    => 'auth',
+                    'userModel' => 'Community.Users',
                     'fields'    => [
                         'username' => 'login',
                         'password' => 'password'
-                    ]
+                    ],
                 ]
             ],
             'flash' => [

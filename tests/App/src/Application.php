@@ -13,22 +13,15 @@
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
 
-namespace Community\Model\Entity;
+namespace Test\App;
 
-use Core\ORM\Entity\Entity;
+use Core\Application as CoreApplication;
 
 /**
- * Class Group
+ * Class Application
  *
- * @package     Community\Model\Entity
- *
- * @property    int $id
- * @property    null|int $parent_id
- * @property    string $name
- * @property    string $slug
- * @property    int $lft
- * @property    int $rght
+ * @package Test\App
  */
-class Group extends Entity
+class Application extends CoreApplication
 {
 }

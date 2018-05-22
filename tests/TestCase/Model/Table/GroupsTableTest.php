@@ -38,6 +38,9 @@ class GroupsTableTest extends IntegrationTestCase
         self::assertSame(CMS_TABLE_GROUPS, $this->_getTable()->getTable());
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     */
     public function testDefaultValidation()
     {
         $table  = $this->_getTable();
@@ -109,6 +112,6 @@ class GroupsTableTest extends IntegrationTestCase
      */
     protected function _getTable($name = 'Groups')
     {
-        return TableRegistry::get($this->_corePlugin . '.' . $name);
+        return TableRegistry::getTableLocator()->get($this->_corePlugin . '.' . $name);
     }
 }

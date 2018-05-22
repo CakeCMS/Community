@@ -18,7 +18,6 @@ namespace Community\Controller;
 use Core\Event\EventManager;
 use Community\Model\Entity\User;
 use Community\Model\Table\UsersTable;
-use Cake\Network\Exception\BadRequestException;
 
 /**
  * Class UsersController
@@ -32,7 +31,9 @@ class UsersController extends AppController
     /**
      * Default profile page action.
      *
-     * @return void
+     * @return  void
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function profile()
     {
@@ -53,13 +54,16 @@ class UsersController extends AppController
      * @param   null|int $id            User id.
      * @param   null|string $token      User activation token.
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function activate($id = null, $token = null)
     {
         $user = $this->_getUser($id, $token);
 
         if ($user === null) {
-            throw new BadRequestException(__d('community', 'User was not found'));
+            $this->Flash->error(__d('community', 'User was not found'));
+            return $this->redirect(['action' => 'login']);
         }
 
         if ($user->status) {
@@ -97,6 +101,8 @@ class UsersController extends AppController
      * Login action.
      *
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function login()
     {
@@ -129,13 +135,16 @@ class UsersController extends AppController
      * @param   null|int $id        User id.
      * @param   null|string $token  User activation token.
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function setupPassword($id = null, $token = null)
     {
         $user = $this->_getUser($id, $token);
 
         if ($user === null) {
-            throw new BadRequestException(__d('community', 'User was not found'));
+            $this->Flash->error(__d('community', 'User was not found'));
+            return $this->redirect(['action' => 'login']);
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {

@@ -15,6 +15,7 @@
 
 namespace Community\Model\Table;
 
+use Cake\ORM\Query;
 use Core\ORM\Table;
 use Core\Event\EventManager;
 use Cake\Validation\Validator;
@@ -93,6 +94,8 @@ class UsersTable extends Table
      *
      * @param   Validator $validator The validator that can be modified to add some rules to it.
      * @return  Validator
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function validationDefault(Validator $validator)
     {
@@ -154,5 +157,18 @@ class UsersTable extends Table
             ]);
 
         return $validator;
+    }
+
+    /**
+     * Find auth user.
+     *
+     * @param   Query $query
+     * @param   array $options
+     *
+     * @return  \Cake\ORM\Query
+     */
+    public function findAuth(Query $query, array $options)
+    {
+        return $query->where(['Users.status' => 1]);
     }
 }

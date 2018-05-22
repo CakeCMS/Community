@@ -16,7 +16,6 @@
 namespace Community\Test\TestCase\Model\Table;
 
 use Test\Cases\TestCase;
-use Cake\ORM\TableRegistry;
 use Community\Model\Table\UsersTable;
 
 /**
@@ -38,8 +37,8 @@ class UsersTableTest extends TestCase
 
     public function setUp()
     {
-        parent::setUp();
-        $this->Users = TableRegistry::get('Community.Users');
+        parent::setUp();;
+        $this->Users = $this->_getTable('Users');
     }
 
     public function testAliasValidate()

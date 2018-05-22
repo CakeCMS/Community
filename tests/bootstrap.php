@@ -14,9 +14,7 @@
  */
 
 use Core\Cms;
-use Cake\Mailer\Email;
 use Cake\Core\Configure;
-use Cake\Routing\DispatcherFactory;
 use Cake\Datasource\ConnectionManager;
 
 //  Composer autoload.
@@ -55,10 +53,21 @@ ConnectionManager::setConfig('test', [
     'url'      => getenv('db_dsn')
 ]);
 
-Email::setConfig(Configure::consume('Email'));
-Email::setConfigTransport(Configure::consume('EmailTransport'));
+use Cake\Chronos\Chronos;
+use Cake\Chronos\Date;
+use Cake\Chronos\MutableDate;
+use Cake\Chronos\MutableDateTime;
 
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
+Chronos::setTestNow(Chronos::now());
+MutableDateTime::setTestNow(MutableDateTime::now());
+Date::setTestNow(Date::now());
+MutableDate::setTestNow(MutableDate::now());
+
+ini_set('session.gc_divisor', '1');
+loadPHPUnitAliases();
+// Fixate sessionid early on, as php7.2+
+// does not allow the sessionid to be set after stdout
+// has been written to.
+session_id('cli');
 
 Cms::getInstance();

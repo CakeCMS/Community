@@ -17,7 +17,6 @@ namespace Community\Test\TestCase\Notify;
 
 use Core\Plugin;
 use Test\Cases\TestCase;
-use Cake\ORM\TableRegistry;
 use Community\Notify\Email;
 use Community\Model\Table\UsersTable;
 
@@ -51,7 +50,7 @@ class EmailTest extends TestCase
     public function testActivationMessage()
     {
         /** @var UsersTable $table */
-        $table = TableRegistry::get('Community.Users');
+        $table = $this->_getTable('Users');
         $user  = $table->get(1);
 
         $user->set('name', 'Tester sender');
@@ -71,7 +70,7 @@ class EmailTest extends TestCase
     public function testCreateMessage()
     {
         /** @var UsersTable $table */
-        $table = TableRegistry::get('Community.Users');
+        $table = $this->_getTable('Users');
         $user  = $table->get(1);
 
         $user->set('name', 'Tester sender');

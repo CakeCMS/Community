@@ -23,23 +23,23 @@ use Cake\Auth\DefaultPasswordHasher;
 /**
  * Class User
  *
- * @package Community\Model\Entity
+ * @package     Community\Model\Entity
  *
- * @property int        $id
- * @property int        $group_id
- * @property Group      $group
- * @property string     $login
- * @property string     $name
- * @property string     $slug
- * @property string     $email
- * @property string     $password
- * @property string     $token
- * @property bool       $status
- * @property FrozenTime $last_login
- * @property FrozenTime $last_action
- * @property FrozenTime $modified
- * @property FrozenTime $created
- * @property string     activation_url  Virtual field.
+ * @property    int        $id
+ * @property    int        $group_id
+ * @property    Group      $group
+ * @property    string     $login
+ * @property    string     $name
+ * @property    string     $slug
+ * @property    string     $email
+ * @property    string     $password
+ * @property    string     $token
+ * @property    bool       $status
+ * @property    FrozenTime $last_login
+ * @property    FrozenTime $last_action
+ * @property    FrozenTime $modified
+ * @property    FrozenTime $created
+ * @property    string     activation_url  Virtual field.
  */
 class User extends Entity
 {

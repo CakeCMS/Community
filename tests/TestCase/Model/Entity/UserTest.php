@@ -17,7 +17,6 @@ namespace Community\Test\TestCase\Model\Entity;
 
 use Cake\Routing\Router;
 use Test\Cases\TestCase;
-use Cake\ORM\TableRegistry;
 use Community\Model\Entity\User;
 use Community\Model\Table\UsersTable;
 
@@ -36,7 +35,7 @@ class UserTest extends TestCase
     public function testClassName()
     {
         $entity = new User();
-        $table  = TableRegistry::get('Community.Users');
+        $table  = $this->_getTable('Users');
         $user   = $table->get(1)->toArray();
 
         self::assertArrayHasKey('id',           $user);
@@ -60,7 +59,7 @@ class UserTest extends TestCase
     public function testGetEditUrl()
     {
         /** @var UsersTable $table */
-        $table = TableRegistry::get('Community.Users');
+        $table  = $this->_getTable('Users');
 
         $userId = 1;
         $user   = $table->get($userId);

@@ -40,6 +40,7 @@ class UsersController extends AppController
      *
      * @return  \Cake\Http\Response|null
      *
+     * @throws  \Aura\Intl\Exception
      * @throws  \Cake\ORM\Exception\RolledbackTransactionException
      */
     public function add()
@@ -76,6 +77,8 @@ class UsersController extends AppController
      *
      * @param   null|int $id User id.
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function changePassword($id = null)
     {
@@ -103,6 +106,7 @@ class UsersController extends AppController
      * @param   null|int $id User id.
      * @return  \Cake\Http\Response|null
      *
+     * @throws  \Aura\Intl\Exception
      * @throws  RecordNotFoundException
      * @throws  InvalidPrimaryKeyException
      * @throws  RolledbackTransactionException
@@ -138,6 +142,7 @@ class UsersController extends AppController
      *
      * @return  void
      *
+     * @throws  \Aura\Intl\Exception
      * @throws  \RuntimeException
      */
     public function index()
@@ -169,6 +174,8 @@ class UsersController extends AppController
      * Login action.
      *
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function login()
     {
@@ -200,6 +207,8 @@ class UsersController extends AppController
      * Process action.
      *
      * @return  \Cake\Http\Response|null
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function process()
     {

@@ -42,7 +42,9 @@ class UserComponent extends AppComponent
     /**
      * Startup callback.
      *
-     * @param Event $event
+     * @param   Event $event
+     *
+     * @throws  \Aura\Intl\Exception
      */
     public function startup(Event $event)
     {
@@ -55,7 +57,9 @@ class UserComponent extends AppComponent
     /**
      * Setup profile nav bar for admin.
      *
-     * @return void
+     * @return  void
+     *
+     * @throws  \Aura\Intl\Exception
      */
     protected function _setupAdminProfileNavBar()
     {

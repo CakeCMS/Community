@@ -16,7 +16,6 @@
 namespace Community\Test\TestCase\Controller;
 
 use Core\Plugin;
-use Cake\ORM\TableRegistry;
 use Community\Model\Entity\User;
 use Community\Controller\UsersController;
 use Test\App\TestCase\AppControllerTest as IntegrationTestCase;
@@ -24,8 +23,8 @@ use Test\App\TestCase\AppControllerTest as IntegrationTestCase;
 /**
  * Class UsersControllerTest
  *
- * @package Community\Test\TestCase
- * @property UsersController|null $_controller
+ * @package     Community\Test\TestCase
+ * @property    UsersController|null $_controller
  */
 class UsersControllerTest extends IntegrationTestCase
 {
@@ -47,9 +46,15 @@ class UsersControllerTest extends IntegrationTestCase
 
         unset($this->_url['prefix']);
 
+        $this->_useHttpServer = true;
+
         Plugin::routes($this->_corePlugin);
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testActivateUserActivated()
     {
         $this
@@ -79,6 +84,10 @@ class UsersControllerTest extends IntegrationTestCase
         );
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testActivateUserSuccess()
     {
         $this
@@ -88,7 +97,7 @@ class UsersControllerTest extends IntegrationTestCase
             ->_setAuthUserData();
 
         $userId = 2;
-        $table  = TableRegistry::get('Community.Users');
+        $table  = $this->_getTable('Users');
 
         /** @var User $user */
         $user = $table->get($userId);
@@ -119,20 +128,37 @@ class UsersControllerTest extends IntegrationTestCase
         self::assertNull($user->token);
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testActivationNotFindUser()
     {
         $this
             ->enableCsrfToken()
             ->enableSecurityToken()
+            ->enableRetainFlashMessages()
             ->_setAuthUserData();
 
         $userId = 1111;
-        $url    = $this->_getUrl(['action' => 'activate', $userId, 33333]);
+        $this->get($this->_getUrl(['action' => 'activate', $userId, 33333]));
 
-        $this->get($url);
-        $this->assertResponseError(__d('community', 'User was not found'));
+        $this->assertRedirect([
+            'controller' => 'Users',
+            'action'     => 'login',
+            'plugin'     => 'Community'
+        ]);
+
+        $this->assertSession(
+            __d('community', 'User was not found'),
+            'Flash.flash.0.message'
+        );
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testLogin()
     {
         $this
@@ -157,6 +183,19 @@ class UsersControllerTest extends IntegrationTestCase
         self::assertTrue(is_array($this->_controller->viewVars));
         self::assertArrayHasKey('page_title', $this->_controller->viewVars);
         self::assertSame(__d('community', 'Authorize profile'), $this->_controller->viewVars['page_title']);
+    }
+
+    /**
+     * @throws \PHPUnit\Exception
+     */
+    public function testLoginSuccess()
+    {
+        $this
+            ->enableCsrfToken()
+            ->enableSecurityToken()
+            ->enableRetainFlashMessages();
+
+        $url = $this->_getUrl(['action' => 'login']);
 
         $this->post($url, [
             'login'    => 'admin',
@@ -171,6 +210,9 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testLogout()
     {
         $this
@@ -189,6 +231,9 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testSetupPasswordActiveUser()
     {
         $this
@@ -218,6 +263,9 @@ class UsersControllerTest extends IntegrationTestCase
         );
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testSetupPasswordNotActivateUser()
     {
         $this
@@ -244,6 +292,10 @@ class UsersControllerTest extends IntegrationTestCase
         ]);
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testSetupPasswordNotFindUser()
     {
         $this
@@ -254,9 +306,23 @@ class UsersControllerTest extends IntegrationTestCase
         $url = $this->_getUrl(['action' => 'setupPassword', 111, 'token']);
 
         $this->get($url);
-        $this->assertResponseError(__d('community', 'User was not found'));
+
+        $this->assertSession(
+            __d('community', 'User was not found'),
+            'Flash.flash.0.message'
+        );
+
+        $this->assertRedirect([
+            'controller' => 'Users',
+            'action'     => 'login',
+            'plugin'     => 'Community'
+        ]);
     }
 
+    /**
+     * @throws \Aura\Intl\Exception
+     * @throws \PHPUnit\Exception
+     */
     public function testSetupPasswordNotSave()
     {
         $this
@@ -285,6 +351,9 @@ class UsersControllerTest extends IntegrationTestCase
         self::assertInstanceOf('Community\Model\Entity\User', $this->_controller->viewVars['user']);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testProfile()
     {
         $this
@@ -299,6 +368,9 @@ class UsersControllerTest extends IntegrationTestCase
         self::assertArrayHasKey('page_title', $this->_controller->viewVars);
     }
 
+    /**
+     * @throws \PHPUnit\Exception
+     */
     public function testProfileNotAuth()
     {
         $this

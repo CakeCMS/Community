@@ -85,5 +85,13 @@ Cache::setConfig([
         'serialize' => true,
         'engine'    => 'File',
         'prefix'    => 'cms_model_'
+    ],
+    '_cake_routes_' => [
+        'className' => 'File',
+        'prefix'    => 'myapp_cake_routes_',
+        'path'      => CACHE,
+        'serialize' => true,
+        'duration'  => '+1 years',
+        'url'       => env('CACHE_CAKEROUTES_URL', null),
     ]
 ]);

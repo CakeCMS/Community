@@ -12,23 +12,3 @@
  * @link        https://github.com/CakeCMS/Community".
  * @author      Sergey Kalistratov <kalistratov.s.m@gmail.com>
  */
-
-namespace Community\Model\Entity;
-
-use Core\ORM\Entity\Entity;
-
-/**
- * Class Group
- *
- * @package     Community\Model\Entity
- *
- * @property    int $id
- * @property    null|int $parent_id
- * @property    string $name
- * @property    string $slug
- * @property    int $lft
- * @property    int $rght
- */
-class Group extends Entity
-{
-}
