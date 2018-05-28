@@ -15,6 +15,8 @@
  * @var         \Community\Model\Entity\User $user
  */
 
+use Core\Nav;
+
 $user = $this->get('user');
 ?>
 <div class="profile-page section">
@@ -58,12 +60,14 @@ $user = $this->get('user');
 
     <div class="profile-page-content row">
         <div class="col s12 m4">
-            <div class="card cyan">
-                <div class="card-content white-text">
-                    <span class="card-title">About Me!</span>
-                    <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                </div>
-            </div>
+            <?php
+            echo $this->Nav->render('profile_menu', Nav::items('profile_menu'), [
+                'menuAttr' => [
+                    'class' => 'profile-nav collection '
+                ],
+                'itemElement' => 'Community.Nav/Sidebar/item'
+            ]);
+            ?>
         </div>
         <div class="col s12 m8">
             <div class="card">
